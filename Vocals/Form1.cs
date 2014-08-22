@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO;
 
-namespace Voice_Defense {
+namespace Vocals {
     public partial class Form1 : Form {
 
         protected delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
@@ -255,6 +255,14 @@ namespace Voice_Defense {
 
         private void button5_Click(object sender, EventArgs e) {
             myWindows.Clear();
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e) {
+
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e) {
+
         }
 
 

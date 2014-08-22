@@ -1,4 +1,4 @@
-﻿namespace Voice_Defense {
+﻿namespace Vocals {
     partial class FormNewProfile {
         /// <summary>
         /// Required designer variable.

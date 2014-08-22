@@ -1,4 +1,4 @@
-﻿namespace Voice_Defense
+﻿namespace Vocals
 {
     partial class Form1
     {
@@ -146,6 +146,7 @@
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Commands ";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // groupBox4
             // 
@@ -156,6 +157,7 @@
             this.groupBox4.TabIndex = 15;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Application";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // groupBox3
             // 

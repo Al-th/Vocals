@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Voice_Defense
+namespace Vocals
 {
     [Serializable]
     public class Profile

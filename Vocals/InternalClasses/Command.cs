@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Voice_Defense
+namespace Vocals
 {
     [Serializable]
     public class Command

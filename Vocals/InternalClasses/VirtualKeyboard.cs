@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Voice_Defense {
+namespace Vocals {
     public static class VirtualKeyboard {
         [StructLayout(LayoutKind.Sequential)]
         internal struct KEYBOARDINPUT {

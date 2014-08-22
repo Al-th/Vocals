@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Voice_Defense {
+namespace Vocals {
     public partial class FormNewProfile : Form {
         public string profileName { get; set; }
 

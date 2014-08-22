@@ -1,4 +1,4 @@
-﻿namespace Voice_Defense {
+﻿namespace Vocals {
     partial class FormAction {
         /// <summary>
         /// Required designer variable.

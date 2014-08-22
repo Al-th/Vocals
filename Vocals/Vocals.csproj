@@ -7,7 +7,7 @@
     <ProjectGuid>{0BA8881B-1EF7-497D-ADBE-2AE4EC35BC75}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Voice_Defense</RootNamespace>
+    <RootNamespace>Vocals</RootNamespace>
     <AssemblyName>Voice Defense</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

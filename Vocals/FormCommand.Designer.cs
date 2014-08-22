@@ -1,4 +1,4 @@
-﻿namespace Voice_Defense
+﻿namespace Vocals
 {
     partial class FormCommand
     {

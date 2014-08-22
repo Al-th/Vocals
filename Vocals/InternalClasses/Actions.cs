@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace Voice_Defense
+namespace Vocals
 {
     [Serializable]
     public class Actions

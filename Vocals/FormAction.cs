@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Voice_Defense {
+namespace Vocals {
     public partial class FormAction : Form {
         Keys[] keyDataSource;
 
