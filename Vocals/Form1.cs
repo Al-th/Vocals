@@ -185,24 +185,29 @@ namespace Vocals {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            if (speechEngine != null) {
-                speechEngine.RecognizeAsyncCancel();
+            try {
+                if (speechEngine != null) {
+                    speechEngine.RecognizeAsyncCancel();
 
-                FormCommand formCommand = new FormCommand();
-                formCommand.ShowDialog();
+                    FormCommand formCommand = new FormCommand();
+                    formCommand.ShowDialog();
 
-                Profile p = (Profile)comboBox2.SelectedItem;
+                    Profile p = (Profile)comboBox2.SelectedItem;
 
-                if (p != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
-                    p.addCommand(formCommand.commandString, formCommand.actionList);
-                    listBox1.DataSource = null;
-                    listBox1.DataSource = p.commandList;
-                    loadProfile(p);
+                    if (p != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
+                        p.addCommand(formCommand.commandString, formCommand.actionList);
+                        listBox1.DataSource = null;
+                        listBox1.DataSource = p.commandList;
+                        loadProfile(p);
+                    }
+
+                    if (speechEngine.Grammars.Count != 0) {
+                        speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    }
                 }
-
-                if (speechEngine.Grammars.Count != 0) {
-                    speechEngine.RecognizeAsync(RecognizeMode.Multiple);
-                }
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
             }
         }
 
