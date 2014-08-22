@@ -185,6 +185,7 @@ namespace Vocals {
         }
 
         private void button1_Click(object sender, EventArgs e) {
+            richTextBox1.AppendText(speechEngine.ToString() + "\n");
             /*try {
                 if (speechEngine != null) {
                     speechEngine.RecognizeAsyncCancel();
