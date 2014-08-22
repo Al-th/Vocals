@@ -75,6 +75,7 @@ namespace Vocals {
         void initialyzeSpeechEngine() {
             RecognizerInfo info = null;
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
+                richTextBox1.AppendText(ri.Culture.DisplayName + "\n");
                 if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentCulture)) {
                     richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName);
                     info = ri;
