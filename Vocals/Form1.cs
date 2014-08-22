@@ -139,6 +139,7 @@ namespace Vocals {
                 profileList.Add(p);
                 comboBox2.DataSource = null;
                 comboBox2.DataSource = profileList;
+                comboBox2.SelectedItem = p;
             }
         }
 

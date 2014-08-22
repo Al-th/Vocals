@@ -23,7 +23,15 @@ namespace Vocals
         }
 
         public override string ToString() {
-            return commandString + " : " + actionList.Count.ToString() + " actions";
+            string returnString = commandString + " : " + actionList.Count.ToString();
+            if (actionList.Count > 1) {
+                returnString += " actions";
+            }
+            else {
+                returnString += " action";
+            }
+
+            return returnString;
         }
 
         [DllImport("User32.dll")]

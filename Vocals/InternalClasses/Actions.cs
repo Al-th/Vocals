@@ -40,7 +40,7 @@ namespace Vocals
                     VirtualKeyboard.PressKey((byte)keys);
                     break;
                 case "Timer":
-                    //System.Threading.Thread.Sleep((int)(timer*1000));
+                    System.Threading.Thread.Sleep((int)(timer*1000));
                     break;
             }
         }
