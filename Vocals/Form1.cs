@@ -83,7 +83,9 @@ namespace Vocals {
             }
 
             if (info == null && SpeechRecognitionEngine.InstalledRecognizers().Count != 0) {
-                info = SpeechRecognitionEngine.InstalledRecognizers()[0];
+                RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers()[0];
+                richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName);
+                info = ri;
             }
 
             if (info == null) {
