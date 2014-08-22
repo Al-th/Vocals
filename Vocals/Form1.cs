@@ -75,7 +75,11 @@ namespace Vocals {
         void initialyzeSpeechEngine() {
             RecognizerInfo info = null;
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
-                if (ri.Culture.TwoLetterISOLanguageName.Equals("fr")) {
+                if (ri.Culture.TwoLetterISOLanguageName.Equals("en")) {
+                    info = ri;
+                    break;
+                }
+                else if (ri.Culture.TwoLetterISOLanguageName.Equals("fr")) {
                     info = ri;
                     break;
                 }
@@ -196,7 +200,9 @@ namespace Vocals {
                 loadProfile(p);
             }
 
-            speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+            if (speechEngine.Grammars.Count != 0) {
+                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
