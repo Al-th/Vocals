@@ -82,8 +82,11 @@ namespace Vocals {
                 }
             }
 
-            if (info == null) return;
-
+            if (info == null) {
+                richTextBox1.AppendText("Could not find any installed recognizers\n");
+                richTextBox1.AppendText("Trying to find a fix right now for this specific error\n");
+                return;
+            }
             speechEngine = new SpeechRecognitionEngine(info);
             speechEngine.SetInputToDefaultAudioDevice();
             speechEngine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(sr_speechRecognized);
@@ -97,19 +100,16 @@ namespace Vocals {
 
 
         void sr_speechRecognized(object sender, SpeechRecognizedEventArgs e) {
-            //Console.WriteLine(e.Result.Text);
             richTextBox1.AppendText("Commande reconnue : "+ e.Result.Text + "\n");
 
             Profile p = (Profile)comboBox2.SelectedItem;
 
-            foreach (Command c in p.commandList) {
-                if (c.commandString.Equals(e.Result.Text)) {
-                    c.perform(winPointer);
+            if (p != null) {
+                foreach (Command c in p.commandList) {
+                    if (c.commandString.Equals(e.Result.Text)) {
+                        c.perform(winPointer);
+                    }
                 }
-            }
-
-            if (e.Result.Text.Equals("Banane")) {
-
             }
         }
 
@@ -153,12 +153,12 @@ namespace Vocals {
             if (p != null) {
                 loadProfile(p);
 
+                listBox1.DataSource = null;
+                listBox1.DataSource = p.commandList;
+
                 if (speechEngine.Grammars.Count != 0) {
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                 }
-
-                listBox1.DataSource = null;
-                listBox1.DataSource = p.commandList;
             }
         }
 
@@ -185,20 +185,24 @@ namespace Vocals {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            speechEngine.RecognizeAsyncStop();
+            if (speechEngine != null) {
+                speechEngine.RecognizeAsyncCancel();
 
-            FormCommand formCommand = new FormCommand();
-            formCommand.ShowDialog();
-            Profile p = (Profile)comboBox2.SelectedItem;
-            if (p != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
-                p.addCommand(formCommand.commandString, formCommand.actionList);
-                listBox1.DataSource = null;
-                listBox1.DataSource = p.commandList;
-                loadProfile(p);
-            }
+                FormCommand formCommand = new FormCommand();
+                formCommand.ShowDialog();
 
-            if (speechEngine.Grammars.Count != 0) {
-                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                Profile p = (Profile)comboBox2.SelectedItem;
+
+                if (p != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
+                    p.addCommand(formCommand.commandString, formCommand.actionList);
+                    listBox1.DataSource = null;
+                    listBox1.DataSource = p.commandList;
+                    loadProfile(p);
+                }
+
+                if (speechEngine.Grammars.Count != 0) {
+                    speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                }
             }
         }
 

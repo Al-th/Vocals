@@ -18,13 +18,11 @@ namespace Vocals
         public FormCommand()
         {
             InitializeComponent();
-            loadActionList();
+            actionList = new List<Actions>();
+
             listBox1.DataSource = actionList;
         }
 
-        public void loadActionList() {
-            actionList = new List<Actions>();
-        }
 
         private void textBox1_TextChanged(object sender, EventArgs e) {
             this.commandString = textBox1.Text;
