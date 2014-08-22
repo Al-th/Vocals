@@ -74,13 +74,16 @@ namespace Vocals {
 
         void initialyzeSpeechEngine() {
             RecognizerInfo info = null;
-            richTextBox1.AppendText(SpeechRecognitionEngine.InstalledRecognizers().Count + "\n");
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
                 if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentCulture)) {
                     richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName);
                     info = ri;
                     break;
                 }
+            }
+
+            if (info == null && SpeechRecognitionEngine.InstalledRecognizers().Count != 0) {
+                info = SpeechRecognitionEngine.InstalledRecognizers()[0];
             }
 
             if (info == null) {
