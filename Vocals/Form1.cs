@@ -227,17 +227,19 @@ namespace Vocals {
 
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            string dir = @"";
-            string serializationFile = Path.Combine(dir, "profiles.vd");
-            try {
-                Stream stream = File.Open(serializationFile, FileMode.Create);
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                bformatter.Serialize(stream, profileList);
-                stream.Close();
+            if (profileList.Count != 0) {
+                string dir = @"";
+                string serializationFile = Path.Combine(dir, "profiles.vd");
+                try {
+                    Stream stream = File.Open(serializationFile, FileMode.Create);
+                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    bformatter.Serialize(stream, profileList);
+                    stream.Close();
 
-            }
-            catch (Exception exception) {
-                throw exception;
+                }
+                catch (Exception exception) {
+                    throw exception;
+                }
             }
            
         }
