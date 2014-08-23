@@ -73,6 +73,7 @@ namespace Vocals {
         }
 
         void initialyzeSpeechEngine() {
+            richTextBox1.AppendText("Starting Speech Recognition Engine \n");
             RecognizerInfo info = null;
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
                 if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentCulture)) {
