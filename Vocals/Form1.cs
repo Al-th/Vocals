@@ -192,8 +192,7 @@ namespace Vocals {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            richTextBox1.AppendText(speechEngine.ToString() + "\n");
-            /*try {
+            try {
                 if (speechEngine != null) {
                     speechEngine.RecognizeAsyncCancel();
 
@@ -216,7 +215,7 @@ namespace Vocals {
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);
-            }*/
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
