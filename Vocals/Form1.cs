@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
-using System.Windows.Input;
+using Vocals.InternalClasses;
 
 
 //TODO Priorité actions
@@ -43,18 +43,49 @@ namespace Vocals {
 
         SpeechRecognitionEngine speechEngine;
 
+        private GlobalHotkey ghk;
+
+        bool listening = false;
+
         public Form1() {
             InitializeComponent();
             initialyzeSpeechEngine();
-
 
             myWindows = new List<string>();
             refreshProcessesList();
 
             fetchProfiles();
 
+            ghk = new GlobalHotkey(0x0004, Keys.None, this);
+
+
 
         }
+
+        public void handleHookedKeypress() {
+            if (listening == false) {
+                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                SpeechSynthesizer synth = new SpeechSynthesizer();
+                synth.Speak("I'm listening commander");
+
+            }
+            else {
+                speechEngine.RecognizeAsyncCancel();
+                SpeechSynthesizer synth = new SpeechSynthesizer();
+                synth.Speak("I'm done commander");
+            }
+            listening = !listening;
+        }
+
+        protected override void WndProc(ref Message m) {
+            if (m.Msg == 0x0312) {
+                handleHookedKeypress();
+            }
+            base.WndProc(ref m);
+        }
+
+
+
 
         public void refreshProcessesList() {
             EnumWindows(new EnumWindowsProc(EnumTheWindows), IntPtr.Zero);
@@ -122,8 +153,14 @@ namespace Vocals {
                 return;
             }
             speechEngine = new SpeechRecognitionEngine(info);
-            speechEngine.SetInputToDefaultAudioDevice();
             speechEngine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(sr_speechRecognized);
+
+            try {
+                speechEngine.SetInputToDefaultAudioDevice();
+            }
+            catch (InvalidOperationException ioe) {
+                richTextBox1.AppendText("No microphone were found\n");
+            }
 
 
 
@@ -134,34 +171,19 @@ namespace Vocals {
 
 
         void sr_speechRecognized(object sender, SpeechRecognizedEventArgs e) {
-            if (checkBox1.Checked == true) {
-                if (Control.ModifierKeys == Keys.Shift) {
-                    richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
 
-                    Profile p = (Profile)comboBox2.SelectedItem;
+            richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
 
-                    if (p != null) {
-                        foreach (Command c in p.commandList) {
-                            if (c.commandString.Equals(e.Result.Text)) {
-                                c.perform(winPointer);
-                            }
-                        }
+            Profile p = (Profile)comboBox2.SelectedItem;
+
+            if (p != null) {
+                foreach (Command c in p.commandList) {
+                    if (c.commandString.Equals(e.Result.Text)) {
+                        c.perform(winPointer);
                     }
                 }
             }
-            else {
-                richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
 
-                Profile p = (Profile)comboBox2.SelectedItem;
-
-                if (p != null) {
-                    foreach (Command c in p.commandList) {
-                        if (c.commandString.Equals(e.Result.Text)) {
-                            c.perform(winPointer);
-                        }
-                    }
-                }
-            }
         }
 
 
@@ -201,6 +223,7 @@ namespace Vocals {
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) {
             if (speechEngine != null) {
                 speechEngine.RecognizeAsyncCancel();
+                listening = false;
             }
 
             Profile p = (Profile)comboBox2.SelectedItem;
@@ -212,6 +235,7 @@ namespace Vocals {
 
                 if (speechEngine.Grammars.Count != 0) {
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    listening = true;
                 }
             }
         }
@@ -222,7 +246,9 @@ namespace Vocals {
 
                 foreach (Command c in p.commandList) {
                     string word = c.commandString;
-                    myWordChoices.Add(word);
+                    if (word != null && word != "") {
+                        myWordChoices.Add(word);
+                    }
                 }
 
                 GrammarBuilder builder = new GrammarBuilder();
@@ -244,6 +270,7 @@ namespace Vocals {
             try {
                 if (speechEngine != null) {
                     speechEngine.RecognizeAsyncCancel();
+                    listening = false;
 
                     FormCommand formCommand = new FormCommand();
                     formCommand.ShowDialog();
@@ -261,6 +288,7 @@ namespace Vocals {
 
                     if (speechEngine.Grammars.Count != 0) {
                         speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                        listening = true;
                     }
                 }
             }
@@ -329,6 +357,7 @@ namespace Vocals {
                 if (c != null) {
                     if (speechEngine != null) {
                         speechEngine.RecognizeAsyncCancel();
+                        listening = false;
                         p.commandList.Remove(c);
                         listBox1.DataSource = null;
                         listBox1.DataSource = p.commandList;
@@ -337,6 +366,7 @@ namespace Vocals {
 
                         if (speechEngine.Grammars.Count != 0) {
                             speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                            listening = true;
                         }
                     }
 
@@ -360,6 +390,7 @@ namespace Vocals {
             try {
                 if (speechEngine != null) {
                     speechEngine.RecognizeAsyncCancel();
+                    listening = false;
 
 
                     Command c = (Command)listBox1.SelectedItem;
@@ -384,6 +415,7 @@ namespace Vocals {
 
                         if (speechEngine.Grammars.Count != 0) {
                             speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                            listening = true;
                         }
                     }
 
@@ -400,7 +432,23 @@ namespace Vocals {
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+            if (checkBox1.Checked) {
+                try {
+                    ghk.register();
+                }
+                catch {
+                    Console.WriteLine("Couldn't register key properly");
+                }
+            }
+            else {
+                try {
+                    ghk.unregister();
+                }
+                catch {
+                    Console.WriteLine("Couldn't unregister key properly");
+                }
 
+            }
         }
 
 

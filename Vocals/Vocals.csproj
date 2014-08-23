@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0BA8881B-1EF7-497D-ADBE-2AE4EC35BC75}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vocals</RootNamespace>
     <AssemblyName>Vocals</AssemblyName>
@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternalClasses\GlobalHotkey.cs" />
     <Compile Include="InternalClasses\VirtualKeyboard.cs" />
     <Compile Include="FormNewProfile.cs">
       <SubType>Form</SubType>
