@@ -59,17 +59,17 @@ namespace Vocals {
             try {
                 Stream stream = File.Open(serializationFile, FileMode.Open);
                 var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                profileList = (List<Profile>)(bformatter.Deserialize(stream)); 
+                profileList = (List<Profile>)(bformatter.Deserialize(stream));
                 stream.Close();
             }
-            catch{
+            catch {
                 profileList = new List<Profile>();
             }
             comboBox2.DataSource = profileList;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            
+
         }
 
         void initialyzeSpeechEngine() {
@@ -77,7 +77,7 @@ namespace Vocals {
             RecognizerInfo info = null;
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
                 if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentCulture)) {
-                    richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName);
+                    richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName+"\n");
                     info = ri;
                     break;
                 }
@@ -85,7 +85,7 @@ namespace Vocals {
 
             if (info == null && SpeechRecognitionEngine.InstalledRecognizers().Count != 0) {
                 RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers()[0];
-                richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName);
+                richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName + "\n");
                 info = ri;
             }
 
@@ -107,7 +107,7 @@ namespace Vocals {
 
 
         void sr_speechRecognized(object sender, SpeechRecognizedEventArgs e) {
-            richTextBox1.AppendText("Commande reconnue : "+ e.Result.Text + "\n");
+            richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
 
             Profile p = (Profile)comboBox2.SelectedItem;
 
@@ -138,7 +138,7 @@ namespace Vocals {
 
         }
 
-        void createNewProfile(){
+        void createNewProfile() {
             FormNewProfile formNewProfile = new FormNewProfile();
             formNewProfile.ShowDialog();
             string profileName = formNewProfile.profileName;
@@ -156,9 +156,13 @@ namespace Vocals {
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) {
+            if (speechEngine != null) {
+                speechEngine.RecognizeAsyncCancel();
+            }
+
             Profile p = (Profile)comboBox2.SelectedItem;
             if (p != null) {
-                loadProfile(p);
+                refreshProfile(p);
 
                 listBox1.DataSource = null;
                 listBox1.DataSource = p.commandList;
@@ -169,8 +173,7 @@ namespace Vocals {
             }
         }
 
-        void loadProfile(Profile p) {
-
+        void refreshProfile(Profile p) {
             if (p.commandList.Count != 0) {
                 Choices myWordChoices = new Choices();
 
@@ -188,6 +191,9 @@ namespace Vocals {
                 speechEngine.LoadGrammar(mygram);
 
             }
+            else {
+                speechEngine.UnloadAllGrammars(); 
+            }
 
         }
 
@@ -201,11 +207,13 @@ namespace Vocals {
 
                     Profile p = (Profile)comboBox2.SelectedItem;
 
-                    if (p != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
-                        p.addCommand(formCommand.commandString, formCommand.actionList);
-                        listBox1.DataSource = null;
-                        listBox1.DataSource = p.commandList;
-                        loadProfile(p);
+                    if (p != null){
+                        if (formCommand.commandString != "" && formCommand.actionList.Count != 0) {
+                            p.addCommand(formCommand.commandString, formCommand.actionList);
+                            listBox1.DataSource = null;
+                            listBox1.DataSource = p.commandList;
+                        }
+                        refreshProfile(p);
                     }
 
                     if (speechEngine.Grammars.Count != 0) {
@@ -242,6 +250,14 @@ namespace Vocals {
             profileList.Remove(p);
             comboBox2.DataSource = null;
             comboBox2.DataSource = profileList;
+
+            if (profileList.Count == 0) {
+                listBox1.DataSource = null;
+            }
+            else {
+                comboBox2.SelectedItem = profileList[0];
+                refreshProfile((Profile)comboBox2.SelectedItem);
+            }
         }
 
 
@@ -259,18 +275,28 @@ namespace Vocals {
             catch (Exception exception) {
                 throw exception;
             }
-            
-           
+
+
         }
 
         private void button4_Click(object sender, EventArgs e) {
             Profile p = (Profile)(comboBox2.SelectedItem);
-            if(p!=null){
+            if (p != null) {
                 Command c = (Command)listBox1.SelectedItem;
-                if(c!=null){
-                    p.commandList.Remove(c);
-                    listBox1.DataSource = null;
-                    listBox1.DataSource = p.commandList;
+                if (c != null) {
+                    if (speechEngine != null) {
+                        speechEngine.RecognizeAsyncCancel();
+                        p.commandList.Remove(c);
+                        listBox1.DataSource = null;
+                        listBox1.DataSource = p.commandList;
+
+                        refreshProfile(p);
+
+                        if (speechEngine.Grammars.Count != 0) {
+                            speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                        }
+                    }
+
                 }
             }
         }
