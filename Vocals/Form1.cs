@@ -68,15 +68,18 @@ namespace Vocals {
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                     SpeechSynthesizer synth = new SpeechSynthesizer();
                     synth.Speak("I'm listening commander");
+                    listening = !listening;
                 }
 
             }
             else {
-                speechEngine.RecognizeAsyncCancel();
-                SpeechSynthesizer synth = new SpeechSynthesizer();
-                synth.Speak("I'm done commander");
+                if (speechEngine.Grammars.Count > 0) {
+                    speechEngine.RecognizeAsyncCancel();
+                    SpeechSynthesizer synth = new SpeechSynthesizer();
+                    synth.Speak("I'm done commander");
+                    listening = !listening;
+                }
             }
-            listening = !listening;
         }
 
         protected override void WndProc(ref Message m) {
