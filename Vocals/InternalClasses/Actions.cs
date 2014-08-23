@@ -38,7 +38,7 @@ namespace Vocals
         public void perform() {
             switch (type) {
                 case "Key press":
-                    VirtualKeyboard.PressKey((byte)keys);
+                    VirtualKeyboard.PressKey(keys);
                     break;
                 case "Timer":
                     System.Threading.Thread.Sleep((int)(timer*1000));

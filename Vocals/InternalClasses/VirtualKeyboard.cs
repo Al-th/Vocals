@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Vocals {
     public static class VirtualKeyboard {
@@ -60,12 +61,14 @@ namespace Vocals {
             Scancode = 0x0008
         }
 
-        public static void SendKey(byte keyCode, KeyFlag keyFlag) {
+        public static void SendKey(uint keyCode, KeyFlag keyFlag) {
             INPUT InputData = new INPUT();
 
             InputData.type = 1;
-            InputData.ki.scanCode = keyCode;
+            InputData.ki.scanCode = (ushort)keyCode;
             InputData.ki.flags = (uint)keyFlag;
+            Console.WriteLine(InputData.ki.scanCode);
+            Console.WriteLine(keyCode);
 
             SendInput((uint)1, ref InputData, (int)Marshal.SizeOf(typeof(INPUT)));
         }
@@ -73,12 +76,12 @@ namespace Vocals {
         [DllImport("User32.dll")]
         private static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        public static void PressKey(byte key) {
-            uint scanCode = MapVirtualKey((uint)key, 0);
-            Console.WriteLine(scanCode);
-            VirtualKeyboard.SendKey((byte)scanCode, KeyFlag.KeyDown | KeyFlag.Scancode);
-            System.Threading.Thread.Sleep((int)(50));
-            VirtualKeyboard.SendKey((byte)scanCode, KeyFlag.KeyUp | KeyFlag.Scancode);
+        public static void PressKey(Keys key) {
+            uint keyCode = (uint)key;
+            uint scanCode = MapVirtualKey(keyCode, 0);
+            VirtualKeyboard.SendKey(scanCode, KeyFlag.KeyDown | KeyFlag.Scancode);
+            System.Threading.Thread.Sleep((int)(100));
+            VirtualKeyboard.SendKey(scanCode, KeyFlag.KeyUp | KeyFlag.Scancode);
         }
 
     }

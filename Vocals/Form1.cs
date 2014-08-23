@@ -13,6 +13,16 @@ using System.Speech.Synthesis;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.Win32;
+using System.Windows.Input;
+
+
+//TODO Priorité actions
+//TODO Corriger 9/PGUP
+//TODO Corriger Win8
+//TODO Ajouter retour vocal
+//TODO Ajouter commande d'écoute (Chewie boost)
+//TODO Suspendre Vocals
 
 namespace Vocals {
     public partial class Form1 : Form {
@@ -68,8 +78,25 @@ namespace Vocals {
             comboBox2.DataSource = profileList;
         }
 
-        private void Form1_Load(object sender, EventArgs e) {
+        private static void Get45or451FromRegistry() {
+            using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
+               RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\")) {
+                int releaseKey = (int)ndpKey.GetValue("Release");
+                {
+                    if (releaseKey == 378389)
 
+                        Console.WriteLine("The .NET Framework version 4.5 is installed");
+
+                    if (releaseKey == 378758)
+
+                        Console.WriteLine("The .NET Framework version 4.5.1  is installed");
+
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e) {
+            Get45or451FromRegistry();
         }
 
         void initialyzeSpeechEngine() {
@@ -77,7 +104,7 @@ namespace Vocals {
             RecognizerInfo info = null;
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
                 if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentCulture)) {
-                    richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName+"\n");
+                    richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName + "\n");
                     info = ri;
                     break;
                 }
@@ -107,14 +134,31 @@ namespace Vocals {
 
 
         void sr_speechRecognized(object sender, SpeechRecognizedEventArgs e) {
-            richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
+            if (checkBox1.Checked == true) {
+                if (Control.ModifierKeys == Keys.Shift) {
+                    richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
 
-            Profile p = (Profile)comboBox2.SelectedItem;
+                    Profile p = (Profile)comboBox2.SelectedItem;
 
-            if (p != null) {
-                foreach (Command c in p.commandList) {
-                    if (c.commandString.Equals(e.Result.Text)) {
-                        c.perform(winPointer);
+                    if (p != null) {
+                        foreach (Command c in p.commandList) {
+                            if (c.commandString.Equals(e.Result.Text)) {
+                                c.perform(winPointer);
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
+
+                Profile p = (Profile)comboBox2.SelectedItem;
+
+                if (p != null) {
+                    foreach (Command c in p.commandList) {
+                        if (c.commandString.Equals(e.Result.Text)) {
+                            c.perform(winPointer);
+                        }
                     }
                 }
             }
@@ -128,7 +172,6 @@ namespace Vocals {
                 StringBuilder sb = new StringBuilder(size);
                 GetWindowText(hWnd, sb, size);
                 myWindows.Add(sb.ToString());
-                Console.WriteLine(sb.ToString());
             }
             return true;
         }
@@ -192,7 +235,7 @@ namespace Vocals {
 
             }
             else {
-                speechEngine.UnloadAllGrammars(); 
+                speechEngine.UnloadAllGrammars();
             }
 
         }
@@ -207,7 +250,7 @@ namespace Vocals {
 
                     Profile p = (Profile)comboBox2.SelectedItem;
 
-                    if (p != null){
+                    if (p != null) {
                         if (formCommand.commandString != "" && formCommand.actionList.Count != 0) {
                             p.addCommand(formCommand.commandString, formCommand.actionList);
                             listBox1.DataSource = null;
@@ -349,6 +392,14 @@ namespace Vocals {
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e) {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
 
         }
 

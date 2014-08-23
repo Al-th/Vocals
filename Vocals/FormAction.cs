@@ -23,6 +23,7 @@ namespace Vocals {
             InitializeComponent();
 
             keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
+
             comboBox2.DataSource = keyDataSource;
           
             comboBox1.DataSource = new string[]{"Key press","Timer"};
@@ -34,6 +35,8 @@ namespace Vocals {
         public FormAction(Actions a) {
             InitializeComponent();
             keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
+           
+
             comboBox2.DataSource = keyDataSource;
 
             comboBox1.DataSource = new string[] { "Key press", "Timer" };
