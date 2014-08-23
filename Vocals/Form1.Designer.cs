@@ -42,6 +42,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -66,11 +67,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(28, 19);
+            this.button1.Location = new System.Drawing.Point(29, 19);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 23);
+            this.button1.Size = new System.Drawing.Size(70, 23);
             this.button1.TabIndex = 4;
-            this.button1.Text = "Add commands";
+            this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -115,11 +116,11 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(151, 19);
+            this.button4.Location = new System.Drawing.Point(185, 19);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(104, 23);
+            this.button4.Size = new System.Drawing.Size(70, 23);
             this.button4.TabIndex = 11;
-            this.button4.Text = "Delete commands";
+            this.button4.Text = "Delete";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -137,6 +138,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.listBox1);
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.button1);
@@ -177,6 +179,16 @@
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(107, 19);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(70, 23);
+            this.button5.TabIndex = 12;
+            this.button5.Text = "Edit";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,6 +225,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button button5;
     }
 }
 

@@ -23,6 +23,15 @@ namespace Vocals
             listBox1.DataSource = actionList;
         }
 
+        public FormCommand(Command c) {
+            InitializeComponent();
+            actionList = c.actionList;
+            commandString = c.commandString;
+
+            listBox1.DataSource = actionList;
+            textBox1.Text = commandString;
+        }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e) {
             this.commandString = textBox1.Text;
@@ -72,6 +81,27 @@ namespace Vocals
             commandString = "";
             actionList.Clear();
             this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            Actions a = (Actions)listBox1.SelectedItem;
+            if (a != null) {
+                FormAction formEditAction = new FormAction(a);
+                formEditAction.ShowDialog();
+
+                a.keys = formEditAction.selectedKey;
+                a.type = formEditAction.selectedType;
+                a.timer = (float)formEditAction.selectedTimer;
+
+                listBox1.DataSource = null;
+                listBox1.DataSource = actionList;
+
+                
+            }
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e) {
+
         }
 
 

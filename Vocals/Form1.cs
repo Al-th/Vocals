@@ -313,6 +313,45 @@ namespace Vocals {
 
         }
 
+        private void button5_Click_1(object sender, EventArgs e) {
+            try {
+                if (speechEngine != null) {
+                    speechEngine.RecognizeAsyncCancel();
+
+
+                    Command c = (Command)listBox1.SelectedItem;
+                    if (c != null) {
+                        FormCommand formCommand = new FormCommand(c);
+                        formCommand.ShowDialog();
+
+                        Profile p = (Profile)comboBox2.SelectedItem;
+
+
+                        if (p != null) {
+                            if (formCommand.commandString != "" && formCommand.actionList.Count != 0) {
+
+                                c.commandString = formCommand.commandString;
+                                c.actionList = formCommand.actionList;
+
+                                listBox1.DataSource = null;
+                                listBox1.DataSource = p.commandList;
+                            }
+                            refreshProfile(p);
+                        }
+
+                        if (speechEngine.Grammars.Count != 0) {
+                            speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
 
     }
 }

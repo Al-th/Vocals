@@ -11,9 +11,9 @@ namespace Vocals
     [Serializable]
     public class Actions
     {
-        private string type;
-        private System.Windows.Forms.Keys keys;
-        private float timer;
+        public string type;
+        public  System.Windows.Forms.Keys keys;
+        public float timer;
 
         public Actions(string type, System.Windows.Forms.Keys keys, float timer) {
             // TODO: Complete member initialization
@@ -21,6 +21,7 @@ namespace Vocals
             this.keys = keys;
             this.timer = timer;
         }
+
 
         public override string ToString() {
             switch (type) {

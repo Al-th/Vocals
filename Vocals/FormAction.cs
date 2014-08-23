@@ -31,6 +31,21 @@ namespace Vocals {
             numericUpDown1.Increment = 0.1M;
         }
 
+        public FormAction(Actions a) {
+            InitializeComponent();
+            keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
+            comboBox2.DataSource = keyDataSource;
+
+            comboBox1.DataSource = new string[] { "Key press", "Timer" };
+
+            numericUpDown1.DecimalPlaces = 2;
+            numericUpDown1.Increment = 0.1M;
+
+            comboBox2.SelectedItem = a.keys;
+            numericUpDown1.Value = Convert.ToDecimal(a.timer);
+            comboBox1.SelectedItem = a.type;
+        }
+
         private void FormAction_Load(object sender, System.EventArgs e) {
         }
         
