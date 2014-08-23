@@ -64,9 +64,11 @@ namespace Vocals {
 
         public void handleHookedKeypress() {
             if (listening == false) {
-                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
-                SpeechSynthesizer synth = new SpeechSynthesizer();
-                synth.Speak("I'm listening commander");
+                if (speechEngine.Grammars.Count > 0) {
+                    speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    SpeechSynthesizer synth = new SpeechSynthesizer();
+                    synth.Speak("I'm listening commander");
+                }
 
             }
             else {
