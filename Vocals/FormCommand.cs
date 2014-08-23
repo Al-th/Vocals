@@ -7,18 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Vocals
-{
-    public partial class FormCommand : Form
-    {
-        public List<Actions> actionList {get; set;}
-        public string commandString {get; set;}
+namespace Vocals {
+    public partial class FormCommand : Form {
+        public List<Actions> actionList { get; set; }
+        public string commandString { get; set; }
 
 
-        public FormCommand()
-        {
+        public FormCommand() {
             InitializeComponent();
             actionList = new List<Actions>();
+            commandString = "";
 
             listBox1.DataSource = actionList;
         }
@@ -50,7 +48,7 @@ namespace Vocals
             newActionForm.ShowDialog();
 
             if (newActionForm.selectedType != "") {
-                if(newActionForm.selectedType == "Key press" && newActionForm.selectedKey != Keys.None
+                if (newActionForm.selectedType == "Key press" && newActionForm.selectedKey != Keys.None
                     || newActionForm.selectedType == "Timer" && newActionForm.selectedTimer != 0) {
 
                     Actions myNewAction = new Actions(newActionForm.selectedType, newActionForm.selectedKey, newActionForm.selectedTimer);
@@ -62,7 +60,7 @@ namespace Vocals
                 }
             }
 
-            
+
         }
 
         private void FormPopup_Load(object sender, EventArgs e) {
@@ -96,12 +94,38 @@ namespace Vocals
                 listBox1.DataSource = null;
                 listBox1.DataSource = actionList;
 
-                
+
             }
         }
 
         private void groupBox2_Enter(object sender, EventArgs e) {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e) {
+            int selectedIndex = listBox1.SelectedIndex;
+            if (selectedIndex > 0) {
+                Actions actionToMoveDown = actionList.ElementAt(selectedIndex - 1);
+                actionList.RemoveAt(selectedIndex - 1);
+                actionList.Insert(selectedIndex, actionToMoveDown);
+
+                listBox1.DataSource = null;
+                listBox1.DataSource = actionList;
+                listBox1.SelectedIndex = selectedIndex - 1;
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e) {
+            int selectedIndex = listBox1.SelectedIndex;
+            if (selectedIndex < actionList.Count - 1 ) {
+                Actions actionToMoveUp = actionList.ElementAt(selectedIndex + 1);
+                actionList.RemoveAt(selectedIndex + 1);
+                actionList.Insert(selectedIndex, actionToMoveUp);
+
+                listBox1.DataSource = null;
+                listBox1.DataSource = actionList;
+                listBox1.SelectedIndex = selectedIndex + 1;
+            }
         }
 
 

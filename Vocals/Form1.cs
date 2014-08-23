@@ -251,7 +251,7 @@ namespace Vocals {
                     Profile p = (Profile)comboBox2.SelectedItem;
 
                     if (p != null) {
-                        if (formCommand.commandString != "" && formCommand.actionList.Count != 0) {
+                        if (formCommand.commandString != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
                             p.addCommand(formCommand.commandString, formCommand.actionList);
                             listBox1.DataSource = null;
                             listBox1.DataSource = p.commandList;
