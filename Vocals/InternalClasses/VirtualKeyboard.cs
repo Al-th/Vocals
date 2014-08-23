@@ -77,6 +77,7 @@ namespace Vocals {
             uint scanCode = MapVirtualKey((uint)key, 0);
             Console.WriteLine(scanCode);
             VirtualKeyboard.SendKey((byte)scanCode, KeyFlag.KeyDown | KeyFlag.Scancode);
+            System.Threading.Thread.Sleep((int)(50));
             VirtualKeyboard.SendKey((byte)scanCode, KeyFlag.KeyUp | KeyFlag.Scancode);
         }
 
