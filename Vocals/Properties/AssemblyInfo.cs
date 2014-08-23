@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de 
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("Voice Defense")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Vocals")]
+[assembly: AssemblyDescription("Vocals : Voice recognition software to bind keys to your voice")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Voice Defense")]
+[assembly: AssemblyCompany("Al_th")]
+[assembly: AssemblyProduct("Vocals")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
