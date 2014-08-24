@@ -63,7 +63,7 @@ namespace Vocals {
             }
             if (answering) {
                 SpeechSynthesizer synth = new SpeechSynthesizer();
-                synth.Speak(answeringString);
+                synth.SpeakAsync(answeringString);
             }
         }
     }
