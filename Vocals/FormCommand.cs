@@ -12,11 +12,16 @@ namespace Vocals {
         public List<Actions> actionList { get; set; }
         public string commandString { get; set; }
 
+        public bool answering { get; set; }
+        public string answeringString { get; set; }
 
         public FormCommand() {
             InitializeComponent();
             actionList = new List<Actions>();
             commandString = "";
+
+            answering = false;
+            answeringString = "";
 
             listBox1.DataSource = actionList;
         }
@@ -25,6 +30,12 @@ namespace Vocals {
             InitializeComponent();
             actionList = c.actionList;
             commandString = c.commandString;
+
+            answering = c.answering;
+            checkBox1.Checked = answering;
+
+            answeringString = c.answeringString;
+            richTextBox1.Text = answeringString;
 
             listBox1.DataSource = actionList;
             textBox1.Text = commandString;
@@ -52,6 +63,7 @@ namespace Vocals {
                     || newActionForm.selectedType == "Timer" && newActionForm.selectedTimer != 0) {
 
                     Actions myNewAction = new Actions(newActionForm.selectedType, newActionForm.selectedKey, newActionForm.selectedTimer);
+                    
 
                     actionList.Add(myNewAction);
 
@@ -117,7 +129,7 @@ namespace Vocals {
 
         private void button7_Click(object sender, EventArgs e) {
             int selectedIndex = listBox1.SelectedIndex;
-            if (selectedIndex < actionList.Count - 1 ) {
+            if (selectedIndex < actionList.Count - 1) {
                 Actions actionToMoveUp = actionList.ElementAt(selectedIndex + 1);
                 actionList.RemoveAt(selectedIndex + 1);
                 actionList.Insert(selectedIndex, actionToMoveUp);
@@ -127,6 +139,16 @@ namespace Vocals {
                 listBox1.SelectedIndex = selectedIndex + 1;
             }
         }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e) {
+            answeringString = richTextBox1.Text;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+            answering = checkBox1.Checked;
+        }
+
+
 
 
     }

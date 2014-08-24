@@ -2,24 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Speech.Synthesis;
 using System.Text;
 
-namespace Vocals
-{
+namespace Vocals {
     [Serializable]
-    public class Command
-    {
+    public class Command {
 
         public string commandString;
         public List<Actions> actionList;
 
-        public Command(string commandString, List<Actions> actionList)        {
+
+        public bool answering { get; set; }
+
+        public string answeringString { get; set; }
+
+        public Command() {
+
+        }
+
+        public Command(string commandString, List<Actions> actionList) {
             this.commandString = commandString;
             this.actionList = actionList;
         }
 
-        ~Command(){
-            
+        public Command(string commandString, List<Actions> actionList, bool answering, string answeringString) {
+            this.commandString = commandString;
+            this.actionList = actionList;
+            this.answering = answering;
+            this.answeringString = answeringString;
+        }
+
+        ~Command() {
+
         }
 
         public override string ToString() {
@@ -43,8 +58,12 @@ namespace Vocals
         public void perform(IntPtr winPointer) {
             SetForegroundWindow(winPointer);
             ShowWindow(winPointer, 5);
-            foreach(Actions a in actionList){
+            foreach (Actions a in actionList) {
                 a.perform();
+            }
+            if (answering) {
+                SpeechSynthesizer synth = new SpeechSynthesizer();
+                synth.Speak(answeringString);
             }
         }
     }

@@ -15,6 +15,9 @@ namespace Vocals
         public  System.Windows.Forms.Keys keys;
         public float timer;
 
+        public Actions() {
+
+        }
         public Actions(string type, System.Windows.Forms.Keys keys, float timer) {
             // TODO: Complete member initialization
             this.type = type;

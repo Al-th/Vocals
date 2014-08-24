@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
 using Vocals.InternalClasses;
+using System.Xml.Serialization;
 
 
 //TODO Priorité actions
@@ -102,14 +103,24 @@ namespace Vocals {
         void fetchProfiles() {
             string dir = @"";
             string serializationFile = Path.Combine(dir, "profiles.vd");
+            string xmlSerializationFile = Path.Combine(dir, "profiles_xml.vc");
             try {
-                Stream stream = File.Open(serializationFile, FileMode.Open);
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                profileList = (List<Profile>)(bformatter.Deserialize(stream));
-                stream.Close();
+                Stream xmlStream = File.Open(xmlSerializationFile, FileMode.Open);
+                XmlSerializer reader = new XmlSerializer(typeof(List<Profile>));
+                profileList = (List<Profile>)reader.Deserialize(xmlStream);
             }
             catch {
-                profileList = new List<Profile>();
+                try {
+                    Stream stream = File.Open(serializationFile, FileMode.Open);
+                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    profileList = (List<Profile>)(bformatter.Deserialize(stream));
+                    stream.Close();
+
+
+                }
+                catch {
+                    profileList = new List<Profile>();
+                }
             }
             comboBox2.DataSource = profileList;
         }
@@ -284,7 +295,14 @@ namespace Vocals {
 
                     if (p != null) {
                         if (formCommand.commandString != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
-                            p.addCommand(formCommand.commandString, formCommand.actionList);
+                            Command c;
+                            if (formCommand.answering && formCommand.answeringString != "") {
+                                c = new Command(formCommand.commandString, formCommand.actionList, formCommand.answering, formCommand.answeringString);
+                            }
+                            else {
+                                c = new Command(formCommand.commandString, formCommand.actionList);
+                            }
+                            p.addCommand(c);
                             listBox1.DataSource = null;
                             listBox1.DataSource = p.commandList;
                         }
@@ -337,15 +355,26 @@ namespace Vocals {
         }
 
 
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
 
             string dir = @"";
             string serializationFile = Path.Combine(dir, "profiles.vd");
+            string xmlSerializationFile = Path.Combine(dir, "profiles_xml.vc");
             try {
                 Stream stream = File.Open(serializationFile, FileMode.Create);
                 var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
                 bformatter.Serialize(stream, profileList);
                 stream.Close();
+
+                try {
+                    Stream xmlStream = File.Open(xmlSerializationFile, FileMode.Create);
+                    System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Profile>));
+                    writer.Serialize(xmlStream, profileList);
+                }
+                catch (Exception ex) {
+                    throw (ex);
+                }
 
             }
             catch (Exception exception) {
@@ -411,6 +440,11 @@ namespace Vocals {
 
                                 c.commandString = formCommand.commandString;
                                 c.actionList = formCommand.actionList;
+
+                                if (formCommand.answering && formCommand.answeringString != "") {
+                                    c.answering = formCommand.answering;
+                                    c.answeringString = formCommand.answeringString;
+                                }
 
                                 listBox1.DataSource = null;
                                 listBox1.DataSource = p.commandList;

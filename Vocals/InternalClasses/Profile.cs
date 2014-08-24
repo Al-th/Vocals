@@ -11,13 +11,16 @@ namespace Vocals
         public string name;
         public List<Command> commandList;
 
+        public Profile() {
+        }
+
         public Profile(string name){
             this.name = name;
             commandList = new List<Command>();
         }
 
-        public void addCommand(string commandString, List<Actions> actionList){
-            commandList.Add(new Command(commandString, actionList));
+        public void addCommand(Command c){
+            commandList.Add(c);
         }
 
         ~Profile(){
