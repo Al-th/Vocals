@@ -148,6 +148,10 @@ namespace Vocals {
             answering = checkBox1.Checked;
         }
 
+        private void groupBox4_Enter(object sender, EventArgs e) {
+
+        }
+
 
 
 

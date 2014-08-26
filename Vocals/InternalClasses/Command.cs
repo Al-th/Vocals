@@ -24,6 +24,8 @@ namespace Vocals {
         public Command(string commandString, List<Actions> actionList) {
             this.commandString = commandString;
             this.actionList = actionList;
+            this.answering = false;
+            this.answeringString = "";
         }
 
         public Command(string commandString, List<Actions> actionList, bool answering, string answeringString) {
@@ -31,6 +33,9 @@ namespace Vocals {
             this.actionList = actionList;
             this.answering = answering;
             this.answeringString = answeringString;
+            if (answeringString == null) {
+                answeringString = "";
+            }
         }
 
         ~Command() {

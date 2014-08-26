@@ -373,12 +373,18 @@ namespace Vocals {
                     writer.Serialize(xmlStream, profileList);
                 }
                 catch (Exception ex) {
-                    throw (ex);
+                    DialogResult res =  MessageBox.Show("Le fichier profiles_xml.vc est en cours d'utilisation par un autre processus. Voulez vous quitter sans sauvegarder ?", "Impossible de sauvegarder", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                    if (res == DialogResult.No) {
+                        e.Cancel = true;
+                    }
                 }
 
             }
             catch (Exception exception) {
-                throw exception;
+                DialogResult res = MessageBox.Show("Le fichier profiles.vd est en cours d'utilisation par un autre processus. Voulez vous quitter sans sauvegarder ?", "Impossible de sauvegarder", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if (res == DialogResult.No) {
+                    e.Cancel = true;
+                }
             }
 
 

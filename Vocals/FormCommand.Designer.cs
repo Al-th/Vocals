@@ -190,6 +190,7 @@
             this.groupBox4.TabIndex = 14;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Command answering";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // FormCommand
             // 
