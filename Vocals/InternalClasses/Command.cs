@@ -61,9 +61,16 @@ namespace Vocals {
             foreach (Actions a in actionList) {
                 a.perform();
             }
-            if (answering) {
-                SpeechSynthesizer synth = new SpeechSynthesizer();
-                synth.SpeakAsync(answeringString);
+            if (answering && answeringString != null) {
+                try {
+                    SpeechSynthesizer synth = new SpeechSynthesizer();
+                    if (synth != null) {
+                        synth.SpeakAsync(answeringString);
+                    }
+                }
+                catch(Exception e){
+                    
+                }
             }
         }
     }

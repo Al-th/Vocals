@@ -68,7 +68,7 @@ namespace Vocals {
                 if (speechEngine.Grammars.Count > 0) {
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                     SpeechSynthesizer synth = new SpeechSynthesizer();
-                    synth.Speak("I'm listening commander");
+                    synth.SpeakAsync("I'm listening commander");
                     listening = !listening;
                 }
 
@@ -77,7 +77,7 @@ namespace Vocals {
                 if (speechEngine.Grammars.Count > 0) {
                     speechEngine.RecognizeAsyncCancel();
                     SpeechSynthesizer synth = new SpeechSynthesizer();
-                    synth.Speak("I'm done commander");
+                    synth.SpeakAsync("I'm done commander");
                     listening = !listening;
                 }
             }
