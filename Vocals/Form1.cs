@@ -56,7 +56,10 @@ namespace Vocals {
             myWindows = new List<string>();
             refreshProcessesList();
 
+
             fetchProfiles();
+
+
 
             ghk = new GlobalHotkey(0x0004, Keys.None, this);
 
@@ -93,9 +96,6 @@ namespace Vocals {
             }
             base.WndProc(ref m);
         }
-
-
-
 
         public void refreshProcessesList() {
             EnumWindows(new EnumWindowsProc(EnumTheWindows), IntPtr.Zero);
@@ -149,6 +149,7 @@ namespace Vocals {
 
         private void Form1_Load(object sender, EventArgs e) {
             Get45or451FromRegistry();
+
         }
 
         void initialyzeSpeechEngine() {
@@ -551,6 +552,10 @@ namespace Vocals {
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
 
         }
 
