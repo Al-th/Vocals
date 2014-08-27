@@ -15,6 +15,9 @@ namespace Vocals {
         public bool answering { get; set; }
         public string answeringString { get; set; }
 
+        public bool answeringSound { get; set; }
+        public string answeringSoundPath { get; set; }
+
         public FormCommand() {
             InitializeComponent();
             actionList = new List<Actions>();
@@ -36,6 +39,12 @@ namespace Vocals {
 
             answeringString = c.answeringString;
             richTextBox1.Text = answeringString;
+
+            answeringSound = c.answeringSound;
+            checkBox2.Checked = answeringSound;
+
+            answeringSoundPath = c.answeringSoundPath;
+            textBox2.Text = answeringSoundPath;
 
             listBox1.DataSource = actionList;
             textBox1.Text = commandString;
@@ -145,11 +154,48 @@ namespace Vocals {
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+            if (checkBox1.Checked) {
+                checkBox2.Checked = false;
+                answeringSound = false;
+            }
             answering = checkBox1.Checked;
+            
         }
 
         private void groupBox4_Enter(object sender, EventArgs e) {
 
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void button9_Click(object sender, EventArgs e) {
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            ofd.Filter = "Sound file (*.wav)|*.wav";
+
+            if (ofd.ShowDialog() == DialogResult.OK && ofd.CheckPathExists) {
+                textBox2.Text = ofd.InitialDirectory + ofd.FileName;
+                answeringSoundPath = textBox2.Text ;
+            }
+           
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e) {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e) {
+            if (checkBox2.Checked) {
+                checkBox1.Checked = false;
+                answering = false;
+            }
+            answeringSound = true;
         }
 
 

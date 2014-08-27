@@ -59,6 +59,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Management" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
@@ -71,7 +72,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOptions.Designer.cs">
+      <DependentUpon>FormOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="InternalClasses\GlobalHotkey.cs" />
+    <Compile Include="InternalClasses\Options.cs" />
     <Compile Include="InternalClasses\VirtualKeyboard.cs" />
     <Compile Include="FormNewProfile.cs">
       <SubType>Form</SubType>
@@ -104,6 +112,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOptions.resx">
+      <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewProfile.resx">
       <DependentUpon>FormNewProfile.cs</DependentUpon>

@@ -43,6 +43,8 @@ namespace Vocals {
 
         SpeechRecognitionEngine speechEngine;
 
+        Options currentOptions;
+
         private GlobalHotkey ghk;
 
         bool listening = false;
@@ -70,7 +72,7 @@ namespace Vocals {
                 if (speechEngine.Grammars.Count > 0) {
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                     SpeechSynthesizer synth = new SpeechSynthesizer();
-                    synth.SpeakAsync("I'm listening commander");
+                    synth.SpeakAsync(currentOptions.answer);
                     listening = !listening;
                 }
 
@@ -79,7 +81,7 @@ namespace Vocals {
                 if (speechEngine.Grammars.Count > 0) {
                     speechEngine.RecognizeAsyncCancel();
                     SpeechSynthesizer synth = new SpeechSynthesizer();
-                    synth.SpeakAsync("I'm done commander");
+                    synth.SpeakAsync(currentOptions.answer);
                     listening = !listening;
                 }
             }
@@ -181,6 +183,7 @@ namespace Vocals {
                 richTextBox1.AppendText("No microphone were found\n");
             }
 
+            speechEngine.MaxAlternates = 3;
 
 
         }
@@ -188,10 +191,9 @@ namespace Vocals {
 
 
 
-
         void sr_speechRecognized(object sender, SpeechRecognizedEventArgs e) {
 
-            richTextBox1.AppendText("Commande reconnue : " + e.Result.Text + "\n");
+            richTextBox1.AppendText("Commande reconnue \"" + e.Result.Text + "\" with confidence of : " + e.Result.Confidence + "\n");
 
             Profile p = (Profile)comboBox2.SelectedItem;
 
@@ -299,12 +301,7 @@ namespace Vocals {
                     if (p != null) {
                         if (formCommand.commandString != null && formCommand.commandString != "" && formCommand.actionList.Count != 0) {
                             Command c;
-                            if (formCommand.answering && formCommand.answeringString != "") {
-                                c = new Command(formCommand.commandString, formCommand.actionList, formCommand.answering, formCommand.answeringString);
-                            }
-                            else {
-                                c = new Command(formCommand.commandString, formCommand.actionList);
-                            }
+                            c = new Command(formCommand.commandString, formCommand.actionList, formCommand.answering, formCommand.answeringString, formCommand.answeringSound, formCommand.answeringSoundPath);
                             p.addCommand(c);
                             listBox1.DataSource = null;
                             listBox1.DataSource = p.commandList;
@@ -450,11 +447,18 @@ namespace Vocals {
 
                                 c.commandString = formCommand.commandString;
                                 c.actionList = formCommand.actionList;
+                                c.answering = formCommand.answering;
+                                c.answeringString = formCommand.answeringString;
+                                c.answeringSound = formCommand.answeringSound;
+                                c.answeringSoundPath = formCommand.answeringSoundPath;
 
-                                if (formCommand.answering && formCommand.answeringString != "") {
-                                    c.answering = formCommand.answering;
-                                    c.answeringString = formCommand.answeringString;
+                                if (c.answeringSoundPath == null) {
+                                    c.answeringSoundPath = "";
                                 }
+                                if (c.answeringString == null) {
+                                    c.answeringString = "";
+                                }
+                               
 
                                 listBox1.DataSource = null;
                                 listBox1.DataSource = p.commandList;
@@ -480,8 +484,47 @@ namespace Vocals {
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
-            if (checkBox1.Checked) {
+
+
+        private void advancedSettingsToolStripMenuItem_Click(object sender, EventArgs e) {
+            FormOptions formOptions = new FormOptions();
+            formOptions.ShowDialog();
+
+            currentOptions = formOptions.opt;
+            refreshSettings();
+        }
+
+        private void refreshSettings() {
+            applyModificationToGlobalHotKey();
+            applyToggleListening();
+            applyRecognitionSensibility();
+            currentOptions.save();
+        }
+
+        private void applyModificationToGlobalHotKey() {
+            if(currentOptions.key == Keys.Shift ||
+                currentOptions.key == Keys.ShiftKey ||
+                currentOptions.key == Keys.LShiftKey ||
+                currentOptions.key == Keys.RShiftKey) {
+                    ghk.modifyKey(0x0004, Keys.None);
+            }
+            else if(currentOptions.key == Keys.Control ||
+                currentOptions.key == Keys.ControlKey ||
+                currentOptions.key == Keys.LControlKey ||
+                currentOptions.key == Keys.RControlKey) {
+                ghk.modifyKey(0x0002,Keys.None);
+                    
+            }
+            else if (currentOptions.key == Keys.Alt) {
+                ghk.modifyKey(0x0002, Keys.None);
+            }
+            else {
+                ghk.modifyKey(0x0000, currentOptions.key);
+            }
+        }
+
+        private void applyToggleListening() {
+            if (currentOptions.toggleListening) {
                 try {
                     ghk.register();
                 }
@@ -499,6 +542,19 @@ namespace Vocals {
 
             }
         }
+
+        private void applyRecognitionSensibility() {
+            if (speechEngine != null) {
+                speechEngine.UpdateRecognizerSetting("CFGConfidenceRejectionThreshold", currentOptions.threshold );
+            }
+            
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+
+        }
+
+
 
 
     }

@@ -17,6 +17,10 @@ namespace Vocals {
 
         public string answeringString { get; set; }
 
+        public bool answeringSound { get; set; }
+
+        public string answeringSoundPath { get; set; }
+
         public Command() {
 
         }
@@ -28,13 +32,18 @@ namespace Vocals {
             this.answeringString = "";
         }
 
-        public Command(string commandString, List<Actions> actionList, bool answering, string answeringString) {
+        public Command(string commandString, List<Actions> actionList, bool answering, string answeringString, bool answeringSound, string answeringSoundPath) {
             this.commandString = commandString;
             this.actionList = actionList;
             this.answering = answering;
             this.answeringString = answeringString;
             if (answeringString == null) {
                 answeringString = "";
+            }
+            this.answeringSound = answeringSound;
+            this.answeringSoundPath = answeringSoundPath;
+            if(answeringSoundPath == null){
+                answeringSoundPath = "";
             }
         }
 
@@ -75,6 +84,14 @@ namespace Vocals {
                 }
                 catch(Exception e){
                     
+                }
+            }
+
+            if (answeringSound && answeringSoundPath != null) {
+                if (answeringSoundPath.IndexOf(".wav") == answeringSoundPath.Length-4) {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+                    player.SoundLocation = answeringSoundPath;
+                    player.Play();
                 }
             }
         }

@@ -24,7 +24,11 @@ namespace Vocals.InternalClasses {
             this.key = (int)k;
             this.hWnd = hw.Handle;
             this.id = this.GetHashCode();
+        }
 
+        public void modifyKey(int mod, Keys k) {
+            this.modifier = mod;
+            this.key = (int)k;
         }
 
         public override int GetHashCode() {
