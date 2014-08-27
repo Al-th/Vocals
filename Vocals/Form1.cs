@@ -18,12 +18,11 @@ using Vocals.InternalClasses;
 using System.Xml.Serialization;
 
 
-//TODO Priorité actions
 //TODO Corriger 9/PGUP
-//TODO Corriger Win8
-//TODO Ajouter retour vocal
-//TODO Ajouter commande d'écoute (Chewie boost)
-//TODO Suspendre Vocals
+//TODO : Retour wav/mp3
+//TODO : Resize
+//TODO : Add random phrases
+//TODO : Add listen to worda
 
 namespace Vocals {
     public partial class Form1 : Form {
@@ -59,7 +58,10 @@ namespace Vocals {
 
             ghk = new GlobalHotkey(0x0004, Keys.None, this);
 
-
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Reflection.AssemblyName assemblyName = assembly.GetName();
+            Version version = assemblyName.Version;
+            this.Text += " version : " + version.ToString();
 
         }
 
@@ -108,6 +110,7 @@ namespace Vocals {
                 Stream xmlStream = File.Open(xmlSerializationFile, FileMode.Open);
                 XmlSerializer reader = new XmlSerializer(typeof(List<Profile>));
                 profileList = (List<Profile>)reader.Deserialize(xmlStream);
+                xmlStream.Close();
             }
             catch {
                 try {
@@ -371,6 +374,7 @@ namespace Vocals {
                     Stream xmlStream = File.Open(xmlSerializationFile, FileMode.Create);
                     System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Profile>));
                     writer.Serialize(xmlStream, profileList);
+                    xmlStream.Close();
                 }
                 catch (Exception ex) {
                     DialogResult res =  MessageBox.Show("Le fichier profiles_xml.vc est en cours d'utilisation par un autre processus. Voulez vous quitter sans sauvegarder ?", "Impossible de sauvegarder", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);

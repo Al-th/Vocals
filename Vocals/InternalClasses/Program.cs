@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Application;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Speech.Synthesis;
@@ -12,7 +13,6 @@ namespace Vocals {
         public static extern int waveInGetNumDevs();
 
 
-
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
@@ -22,6 +22,7 @@ namespace Vocals {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
 
 
 
