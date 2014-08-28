@@ -173,7 +173,7 @@ namespace Vocals {
         private void button9_Click(object sender, EventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
 
-            ofd.Filter = "Sound file (*.wav)|*.wav";
+            ofd.Filter = "Sound file (*.wav,*.mp3)|*.wav;*.mp3";
 
             if (ofd.ShowDialog() == DialogResult.OK && ofd.CheckPathExists) {
                 textBox2.Text = ofd.InitialDirectory + ofd.FileName;

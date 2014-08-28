@@ -19,7 +19,7 @@ using System.Xml.Serialization;
 
 
 //TODO Corriger 9/PGUP
-//TODO : Retour wav/mp3
+//TODO : Retour mp3
 //TODO : Resize
 //TODO : Add random phrases
 //TODO : Add listen to worda
@@ -67,6 +67,9 @@ namespace Vocals {
             System.Reflection.AssemblyName assemblyName = assembly.GetName();
             Version version = assemblyName.Version;
             this.Text += " version : " + version.ToString();
+
+            currentOptions = new Options();
+            refreshSettings();
 
         }
 
@@ -176,6 +179,7 @@ namespace Vocals {
             }
             speechEngine = new SpeechRecognitionEngine(info);
             speechEngine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(sr_speechRecognized);
+            speechEngine.AudioLevelUpdated += new EventHandler<AudioLevelUpdatedEventArgs>(sr_audioLevelUpdated);
 
             try {
                 speechEngine.SetInputToDefaultAudioDevice();
@@ -189,6 +193,12 @@ namespace Vocals {
 
         }
 
+        void sr_audioLevelUpdated(object sender, AudioLevelUpdatedEventArgs e) {
+            if (speechEngine != null) {
+                int val = (int)(10*Math.Sqrt(e.AudioLevel));
+                this.progressBar1.Value = val;
+            }
+        }
 
 
 
@@ -358,6 +368,8 @@ namespace Vocals {
 
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            speechEngine.AudioLevelUpdated -= new EventHandler<AudioLevelUpdatedEventArgs>(sr_audioLevelUpdated);
+            speechEngine.SpeechRecognized -= new EventHandler<SpeechRecognizedEventArgs>(sr_speechRecognized);
 
             string dir = @"";
             string serializationFile = Path.Combine(dir, "profiles.vd");
@@ -557,6 +569,11 @@ namespace Vocals {
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e) {
+            myWindows.Clear();
+            refreshProcessesList();
         }
 
 

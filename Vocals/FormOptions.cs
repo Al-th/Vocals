@@ -40,16 +40,27 @@ namespace Vocals {
 
             comboBox2.SelectedItem = opt.key;
 
+            if (checkBox1.Checked) {
+                comboBox2.Enabled = true;
+                richTextBox1.Enabled = true;
+            }
+            else {
+                comboBox2.Enabled = false;
+                richTextBox1.Enabled = false;
+            }
+
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
             if (opt != null) {
                 if (checkBox1.Checked) {
                     comboBox2.Enabled = true;
+                    richTextBox1.Enabled = true;
                     opt.toggleListening = true;
                 }
                 else {
                     comboBox2.Enabled = false;
+                    richTextBox1.Enabled = false;
                     opt.toggleListening = false;
                 }
             }

@@ -42,9 +42,11 @@
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.advancedSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.button6 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -62,7 +64,7 @@
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(45, 38);
+            this.comboBox1.Location = new System.Drawing.Point(29, 38);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(187, 21);
             this.comboBox1.TabIndex = 1;
@@ -165,6 +167,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button6);
             this.groupBox4.Controls.Add(this.comboBox1);
             this.groupBox4.Location = new System.Drawing.Point(12, 123);
             this.groupBox4.Name = "groupBox4";
@@ -176,6 +179,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.progressBar1);
             this.groupBox3.Controls.Add(this.richTextBox1);
             this.groupBox3.Location = new System.Drawing.Point(12, 223);
             this.groupBox3.Name = "groupBox3";
@@ -185,12 +189,20 @@
             this.groupBox3.Text = "logs";
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(7, 19);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(543, 11);
+            this.progressBar1.Step = 11;
+            this.progressBar1.TabIndex = 1;
+            // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(6, 19);
+            this.richTextBox1.Location = new System.Drawing.Point(6, 36);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(544, 192);
+            this.richTextBox1.Size = new System.Drawing.Size(544, 175);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
@@ -211,6 +223,16 @@
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(222, 38);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(33, 23);
+            this.button6.TabIndex = 2;
+            this.button6.Text = "#";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Form1
             // 
@@ -256,6 +278,8 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ToolStripMenuItem advancedSettingsToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button button6;
     }
 }
 

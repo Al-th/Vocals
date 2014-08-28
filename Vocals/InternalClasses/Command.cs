@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Speech.Synthesis;
 using System.Text;
+using WMPLib;
 
 namespace Vocals {
     [Serializable]
@@ -92,6 +93,12 @@ namespace Vocals {
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer();
                     player.SoundLocation = answeringSoundPath;
                     player.Play();
+                }
+                else if (answeringSoundPath.IndexOf(".mp3") == answeringSoundPath.Length - 4) {
+                    WMPLib.WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
+
+                    wplayer.URL = answeringSoundPath;
+                    wplayer.controls.play();
                 }
             }
         }
