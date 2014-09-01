@@ -14,15 +14,17 @@ namespace Vocals
         public string type;
         public  System.Windows.Forms.Keys keys;
         public float timer;
+        public System.Windows.Forms.Keys keyModifier;
 
         public Actions() {
 
         }
-        public Actions(string type, System.Windows.Forms.Keys keys, float timer) {
+        public Actions(string type, System.Windows.Forms.Keys keys, System.Windows.Forms.Keys modifier, float timer) {
             // TODO: Complete member initialization
             this.type = type;
             this.keys = keys;
             this.timer = timer;
+            this.keyModifier = modifier;
         }
 
 
@@ -41,7 +43,7 @@ namespace Vocals
         public void perform() {
             switch (type) {
                 case "Key press":
-                    VirtualKeyboard.PressKey(keys);
+                    VirtualKeyboard.PressKey(keys, keyModifier);
                     break;
                 case "Timer":
                     System.Threading.Thread.Sleep((int)(timer*1000));

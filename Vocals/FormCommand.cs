@@ -71,7 +71,7 @@ namespace Vocals {
                 if (newActionForm.selectedType == "Key press" && newActionForm.selectedKey != Keys.None
                     || newActionForm.selectedType == "Timer" && newActionForm.selectedTimer != 0) {
 
-                    Actions myNewAction = new Actions(newActionForm.selectedType, newActionForm.selectedKey, newActionForm.selectedTimer);
+                    Actions myNewAction = new Actions(newActionForm.selectedType, newActionForm.selectedKey, newActionForm.modifier, newActionForm.selectedTimer);
                     
 
                     actionList.Add(myNewAction);
@@ -110,6 +110,7 @@ namespace Vocals {
 
                 a.keys = formEditAction.selectedKey;
                 a.type = formEditAction.selectedType;
+                a.keyModifier = formEditAction.modifier;
                 a.timer = (float)formEditAction.selectedTimer;
 
                 listBox1.DataSource = null;

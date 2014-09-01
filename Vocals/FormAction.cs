@@ -17,6 +17,8 @@ namespace Vocals {
         public Keys selectedKey { get; set; }
 
         public string selectedType { get; set; }
+
+        public Keys modifier { get; set; }
         
         public FormAction() {
 
@@ -47,6 +49,20 @@ namespace Vocals {
             comboBox2.SelectedItem = a.keys;
             numericUpDown1.Value = Convert.ToDecimal(a.timer);
             comboBox1.SelectedItem = a.type;
+
+            switch (a.keyModifier) {
+                case Keys.ControlKey:
+                    checkBox1.Checked = true;
+                    break;
+                case Keys.ShiftKey:
+                    checkBox2.Checked = true;
+                    break;
+                case Keys.Alt:
+                    checkBox3.Checked = true;
+                    break;
+                default :
+                    break;
+            }
         }
 
         private void FormAction_Load(object sender, System.EventArgs e) {
@@ -59,10 +75,16 @@ namespace Vocals {
                 case "Key press" :
                     numericUpDown1.Enabled = false;
                     comboBox2.Enabled = true;
+                    checkBox1.Enabled = true;
+                    checkBox2.Enabled = true;
+                    checkBox3.Enabled = true;
                     break;
                 case "Timer":
                     numericUpDown1.Enabled = true;
                     comboBox2.Enabled = false;
+                    checkBox1.Enabled = false;
+                    checkBox2.Enabled = false;
+                    checkBox3.Enabled = false;
                     break;
                 default :
                     break;
@@ -86,6 +108,39 @@ namespace Vocals {
             selectedTimer = 0;
             selectedKey = Keys.None;
             this.Close();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+            if (checkBox1.Checked) {
+                checkBox2.Checked = false;
+                checkBox3.Checked = false;
+                modifier = Keys.ControlKey;
+            }
+            else {
+                modifier = Keys.None;
+            }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e) {
+            if (checkBox2.Checked) {
+                checkBox1.Checked = false;
+                checkBox3.Checked = false;
+                modifier = Keys.ShiftKey;
+            }
+            else {
+                modifier = Keys.None;
+            }
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e) {
+            if (checkBox3.Checked) {
+                checkBox1.Checked = false;
+                checkBox2.Checked = false;
+                modifier = Keys.Alt;
+            }
+            else {
+                modifier = Keys.None;
+            }
         }
 
 

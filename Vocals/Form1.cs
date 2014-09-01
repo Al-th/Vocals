@@ -210,8 +210,13 @@ namespace Vocals {
 
             if (p != null) {
                 foreach (Command c in p.commandList) {
-                    if (c.commandString.Equals(e.Result.Text)) {
-                        c.perform(winPointer);
+                    string[] multiCommands = c.commandString.Split(';');
+                    foreach (string s in multiCommands) {
+                        string correctedWord = s.Trim().ToLower();
+                        if (correctedWord.Equals(e.Result.Text)) {
+                            c.perform(winPointer);
+                            break;
+                        }
                     }
                 }
             }
@@ -277,9 +282,13 @@ namespace Vocals {
                 Choices myWordChoices = new Choices();
 
                 foreach (Command c in p.commandList) {
-                    string word = c.commandString;
-                    if (word != null && word != "") {
-                        myWordChoices.Add(word);
+                    string[] commandList = c.commandString.Split(';');
+                    foreach (string s in commandList) {
+                        string correctedWord;
+                        correctedWord = s.Trim().ToLower();
+                        if (correctedWord != null && correctedWord != "") {
+                            myWordChoices.Add(correctedWord);
+                        }
                     }
                 }
 
