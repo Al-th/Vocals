@@ -35,6 +35,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.recognitionLanguageComboBox = new System.Windows.Forms.ComboBox();
+            this.recognitionLanguageWarning = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -156,11 +157,23 @@
             this.recognitionLanguageComboBox.TabIndex = 16;
             this.recognitionLanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.recognitionLanguageComboBox_SelectedIndexChanged);
             // 
+            // recognitionLanguageWarning
+            // 
+            this.recognitionLanguageWarning.AutoSize = true;
+            this.recognitionLanguageWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recognitionLanguageWarning.ForeColor = System.Drawing.Color.Red;
+            this.recognitionLanguageWarning.Location = new System.Drawing.Point(51, 217);
+            this.recognitionLanguageWarning.Name = "recognitionLanguageWarning";
+            this.recognitionLanguageWarning.Size = new System.Drawing.Size(296, 13);
+            this.recognitionLanguageWarning.TabIndex = 17;
+            this.recognitionLanguageWarning.Text = "<!> You need to restart Vocals to apply language moditication";
+            // 
             // FormOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(399, 278);
+            this.Controls.Add(this.recognitionLanguageWarning);
             this.Controls.Add(this.recognitionLanguageComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
@@ -196,5 +209,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox recognitionLanguageComboBox;
+        private System.Windows.Forms.Label recognitionLanguageWarning;
     }
 }

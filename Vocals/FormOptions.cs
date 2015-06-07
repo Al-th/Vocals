@@ -40,6 +40,7 @@ namespace Vocals {
             trackBar1.Value = opt.threshold;
             label5.Text = Convert.ToString(opt.threshold);
             recognitionLanguageComboBox.SelectedItem = opt.language;
+            recognitionLanguageWarning.Visible = false;
 
             if (checkBox1.Checked) {
                 comboBox2.Enabled = true;
@@ -106,6 +107,7 @@ namespace Vocals {
         private void recognitionLanguageComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (opt != null) {
                 opt.language = (String) recognitionLanguageComboBox.SelectedItem;
+                recognitionLanguageWarning.Visible = true;
             }
         }
 
