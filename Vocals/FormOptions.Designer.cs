@@ -33,6 +33,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.recognitionLanguageComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +54,7 @@
             // 
             this.trackBar1.BackColor = System.Drawing.SystemColors.Control;
             this.trackBar1.LargeChange = 10;
-            this.trackBar1.Location = new System.Drawing.Point(162, 179);
+            this.trackBar1.Location = new System.Drawing.Point(162, 153);
             this.trackBar1.Maximum = 100;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(179, 45);
@@ -92,7 +94,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 194);
+            this.label3.Location = new System.Drawing.Point(13, 153);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(116, 13);
             this.label3.TabIndex = 9;
@@ -110,7 +112,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(348, 193);
+            this.label5.Location = new System.Drawing.Point(347, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 13);
             this.label5.TabIndex = 12;
@@ -135,11 +137,32 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 193);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(111, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Recognition language";
+            // 
+            // recognitionLanguageComboBox
+            // 
+            this.recognitionLanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.recognitionLanguageComboBox.FormattingEnabled = true;
+            this.recognitionLanguageComboBox.Location = new System.Drawing.Point(162, 193);
+            this.recognitionLanguageComboBox.Name = "recognitionLanguageComboBox";
+            this.recognitionLanguageComboBox.Size = new System.Drawing.Size(179, 21);
+            this.recognitionLanguageComboBox.TabIndex = 16;
+            this.recognitionLanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.recognitionLanguageComboBox_SelectedIndexChanged);
+            // 
             // FormOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(399, 278);
+            this.Controls.Add(this.recognitionLanguageComboBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
@@ -171,5 +194,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox recognitionLanguageComboBox;
     }
 }

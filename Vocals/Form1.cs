@@ -50,6 +50,8 @@ namespace Vocals {
         bool listening = false;
 
         public Form1() {
+            currentOptions = new Options();
+
             InitializeComponent();
             initialyzeSpeechEngine();
 
@@ -68,7 +70,6 @@ namespace Vocals {
             Version version = assemblyName.Version;
             this.Text += " version : " + version.ToString();
 
-            currentOptions = new Options();
             refreshSettings();
 
         }
@@ -158,9 +159,14 @@ namespace Vocals {
         void initialyzeSpeechEngine() {
             richTextBox1.AppendText("Starting Speech Recognition Engine \n");
             RecognizerInfo info = null;
+
+            //Use system locale language if no language option can be retrieved
+            if (currentOptions.language == null) {
+                currentOptions.language = System.Globalization.CultureInfo.CurrentUICulture.DisplayName;
+            }
+
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
-                if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentCulture)) {
-                    richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName + "\n");
+                if(ri.Culture.DisplayName.Equals(currentOptions.language)) {
                     info = ri;
                     break;
                 }
@@ -168,11 +174,12 @@ namespace Vocals {
 
             if (info == null && SpeechRecognitionEngine.InstalledRecognizers().Count != 0) {
                 RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers()[0];
-                richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName + "\n");
                 info = ri;
             }
 
-            if (info == null) {
+            if (info != null){
+                richTextBox1.AppendText("Setting VR engine language to " + info.Culture.DisplayName + "\n");
+            } else {
                 richTextBox1.AppendText("Could not find any installed recognizers\n");
                 richTextBox1.AppendText("Trying to find a fix right now for this specific error\n");
                 return;
