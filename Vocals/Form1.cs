@@ -207,11 +207,9 @@ namespace Vocals {
             }
         }
 
-
-
         void sr_speechRecognized(object sender, SpeechRecognizedEventArgs e) {
 
-            richTextBox1.AppendText("Commande reconnue \"" + e.Result.Text + "\" with confidence of : " + e.Result.Confidence + "\n");
+            richTextBox1.AppendText("Command recognized \"" + e.Result.Text + "\" with a confidence of " + Math.Round(e.Result.Confidence,2)*100 + "%\n");
 
             Profile p = (Profile)comboBox2.SelectedItem;
 
@@ -230,8 +228,6 @@ namespace Vocals {
 
         }
 
-
-
         protected bool EnumTheWindows(IntPtr hWnd, IntPtr lParam) {
             int size = GetWindowTextLength(hWnd);
             if (size++ > 0 && IsWindowVisible(hWnd)) {
@@ -241,7 +237,6 @@ namespace Vocals {
             }
             return true;
         }
-
 
         private void textBox1_TextChanged(object sender, EventArgs e) {
 
@@ -381,41 +376,12 @@ namespace Vocals {
             }
         }
 
-
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
             speechEngine.AudioLevelUpdated -= new EventHandler<AudioLevelUpdatedEventArgs>(sr_audioLevelUpdated);
             speechEngine.SpeechRecognized -= new EventHandler<SpeechRecognizedEventArgs>(sr_speechRecognized);
 
-            string dir = @"";
-            string serializationFile = Path.Combine(dir, "profiles.vd");
-            string xmlSerializationFile = Path.Combine(dir, "profiles_xml.vc");
-            try {
-                Stream stream = File.Open(serializationFile, FileMode.Create);
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                bformatter.Serialize(stream, profileList);
-                stream.Close();
-
-                try {
-                    Stream xmlStream = File.Open(xmlSerializationFile, FileMode.Create);
-                    System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Profile>));
-                    writer.Serialize(xmlStream, profileList);
-                    xmlStream.Close();
-                }
-                catch (Exception ex) {
-                    DialogResult res =  MessageBox.Show("Le fichier profiles_xml.vc est en cours d'utilisation par un autre processus. Voulez vous quitter sans sauvegarder ?", "Impossible de sauvegarder", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                    if (res == DialogResult.No) {
-                        e.Cancel = true;
-                    }
-                }
-
-            }
-            catch (Exception exception) {
-                DialogResult res = MessageBox.Show("Le fichier profiles.vd est en cours d'utilisation par un autre processus. Voulez vous quitter sans sauvegarder ?", "Impossible de sauvegarder", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                if (res == DialogResult.No) {
-                    e.Cancel = true;
-                }
-            }
+            if (!saveData())
+                e.Cancel = true;
 
 
         }
@@ -513,8 +479,6 @@ namespace Vocals {
 
         }
 
-
-
         private void advancedSettingsToolStripMenuItem_Click(object sender, EventArgs e) {
             FormOptions formOptions = new FormOptions();
             formOptions.ShowDialog();
@@ -592,8 +556,50 @@ namespace Vocals {
             refreshProcessesList();
         }
 
+        private bool saveData()
+        {
+            string dir = @"";
+            string serializationFile = Path.Combine(dir, "profiles.vd");
+            string xmlSerializationFile = Path.Combine(dir, "profiles_xml.vc");
+            try
+            {
+                Stream stream = File.Open(serializationFile, FileMode.Create);
+                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                bformatter.Serialize(stream, profileList);
+                stream.Close();
 
+                try
+                {
+                    Stream xmlStream = File.Open(xmlSerializationFile, FileMode.Create);
+                    System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Profile>));
+                    writer.Serialize(xmlStream, profileList);
+                    xmlStream.Close();
+                }
+                catch (Exception ex)
+                {
+                    DialogResult res = MessageBox.Show("The file profiles_xml.vc is being used by another process. Cannot save.", "Error with saving", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                    if (res == DialogResult.No)
+                    {
+                        return false;
+                    }
+                }
 
+            }
+            catch (Exception exception)
+            {
+                DialogResult res = MessageBox.Show("The file profiles.vd is being used by another process. Cannot save.", "Error with saving", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if (res == DialogResult.No)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveData())
+                MessageBox.Show("Your profiles and commands have been saved!","Saved!");
+        }
     }
 }

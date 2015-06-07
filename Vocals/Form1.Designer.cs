@@ -41,12 +41,15 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.advancedSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.button6 = new System.Windows.Forms.Button();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -177,6 +180,16 @@
             this.groupBox4.Text = "Application";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(222, 38);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(33, 23);
+            this.button6.TabIndex = 2;
+            this.button6.Text = "↺";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.progressBar1);
@@ -186,7 +199,7 @@
             this.groupBox3.Size = new System.Drawing.Size(572, 217);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "logs";
+            this.groupBox3.Text = "Logs";
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // progressBar1
@@ -209,13 +222,14 @@
             // advancedSettingsToolStripMenuItem
             // 
             this.advancedSettingsToolStripMenuItem.Name = "advancedSettingsToolStripMenuItem";
-            this.advancedSettingsToolStripMenuItem.Size = new System.Drawing.Size(117, 20);
-            this.advancedSettingsToolStripMenuItem.Text = "Advanced Settings";
+            this.advancedSettingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.advancedSettingsToolStripMenuItem.Text = "Settings";
             this.advancedSettingsToolStripMenuItem.Click += new System.EventHandler(this.advancedSettingsToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
             this.advancedSettingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -224,15 +238,27 @@
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
-            // button6
+            // fileToolStripMenuItem
             // 
-            this.button6.Location = new System.Drawing.Point(222, 38);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(33, 23);
-            this.button6.TabIndex = 2;
-            this.button6.Text = "#";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
             // 
             // Form1
             // 
@@ -280,6 +306,9 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

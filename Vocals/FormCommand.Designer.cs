@@ -93,7 +93,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 8;
-            this.button4.Text = "Validate";
+            this.button4.Text = "Create";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -212,7 +212,7 @@
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(71, 23);
             this.button9.TabIndex = 16;
-            this.button9.Text = "Rechercher";
+            this.button9.Text = "Select File";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 

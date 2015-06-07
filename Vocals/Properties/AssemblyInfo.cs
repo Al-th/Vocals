@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Vocals")]
 [assembly: AssemblyDescription("Vocals : Voice recognition software to bind keys to your voice")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Al_th")]
+[assembly: AssemblyCompany("Al_th (With modifications from SquaredX)")]
 [assembly: AssemblyProduct("Vocals")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
