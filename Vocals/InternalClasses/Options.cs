@@ -15,6 +15,7 @@ namespace Vocals.InternalClasses {
         public Keys key;
         public string answer;
         public int threshold;
+        public string language;
 
         public Options() {
             try {
@@ -25,6 +26,7 @@ namespace Vocals.InternalClasses {
                 key = Keys.ShiftKey;
                 answer = "Toggle listening";
                 threshold = 0;
+                language = null;
             }
         }
 
@@ -33,6 +35,7 @@ namespace Vocals.InternalClasses {
             this.key = o.key;
             this.answer = o.answer;
             this.threshold = o.threshold;
+            this.language = o.language;
         }
 
         public void save() {
@@ -60,6 +63,7 @@ namespace Vocals.InternalClasses {
                 this.answer = opt.answer;
                 this.threshold = opt.threshold;
                 this.key = opt.key;
+                this.language = opt.language;
 
                 xmlStream.Close();
             }

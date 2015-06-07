@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Speech.Recognition;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,6 +29,7 @@ namespace Vocals {
             Keys[] keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
             comboBox2.DataSource = keyDataSource;
 
+            recognitionLanguageComboBox.DataSource = getInstalledRecognitionLanguages();
 
             opt = new Options();
             saveOptions = new Options(opt);
@@ -37,8 +39,8 @@ namespace Vocals {
             richTextBox1.Text = opt.answer;
             trackBar1.Value = opt.threshold;
             label5.Text = Convert.ToString(opt.threshold);
-
-            comboBox2.SelectedItem = opt.key;
+            recognitionLanguageComboBox.SelectedItem = opt.language;
+            recognitionLanguageWarning.Visible = false;
 
             if (checkBox1.Checked) {
                 comboBox2.Enabled = true;
@@ -49,6 +51,10 @@ namespace Vocals {
                 richTextBox1.Enabled = false;
             }
 
+        }
+
+        private string[] getInstalledRecognitionLanguages() {
+            return SpeechRecognitionEngine.InstalledRecognizers().Select(ri => ri.Culture.DisplayName).ToArray();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
@@ -97,5 +103,13 @@ namespace Vocals {
             opt = saveOptions;
             this.Close();
         }
+
+        private void recognitionLanguageComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (opt != null) {
+                opt.language = (String) recognitionLanguageComboBox.SelectedItem;
+                recognitionLanguageWarning.Visible = true;
+            }
+        }
+
     }
 }
