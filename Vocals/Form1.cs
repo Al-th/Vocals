@@ -159,7 +159,7 @@ namespace Vocals {
             richTextBox1.AppendText("Starting Speech Recognition Engine \n");
             RecognizerInfo info = null;
             foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers()) {
-                if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentCulture)) {
+                if (ri.Culture.Equals(System.Globalization.CultureInfo.CurrentUICulture)) {
                     richTextBox1.AppendText("Setting VR engine language to " + ri.Culture.DisplayName + "\n");
                     info = ri;
                     break;
