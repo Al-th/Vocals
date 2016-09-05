@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCommand));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -36,6 +37,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.RecordButton = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -45,7 +47,6 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button9 = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.RecordButton = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -135,6 +136,18 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Actions";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // RecordButton
+            // 
+            this.RecordButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.RecordButton.AutoSize = true;
+            this.RecordButton.Location = new System.Drawing.Point(216, 34);
+            this.RecordButton.Name = "RecordButton";
+            this.RecordButton.Size = new System.Drawing.Size(52, 23);
+            this.RecordButton.TabIndex = 12;
+            this.RecordButton.Text = "Record";
+            this.RecordButton.UseVisualStyleBackColor = true;
+            this.RecordButton.CheckedChanged += new System.EventHandler(this.RecordButton_CheckedChanged);
             // 
             // button7
             // 
@@ -230,18 +243,6 @@
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
-            // RecordButton
-            // 
-            this.RecordButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.RecordButton.AutoSize = true;
-            this.RecordButton.Location = new System.Drawing.Point(216, 34);
-            this.RecordButton.Name = "RecordButton";
-            this.RecordButton.Size = new System.Drawing.Size(52, 23);
-            this.RecordButton.TabIndex = 12;
-            this.RecordButton.Text = "Record";
-            this.RecordButton.UseVisualStyleBackColor = true;
-            this.RecordButton.CheckedChanged += new System.EventHandler(this.RecordButton_CheckedChanged);
-            // 
             // FormCommand
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,6 +253,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormCommand";
             this.Text = "New Command";
             this.Load += new System.EventHandler(this.FormPopup_Load);
