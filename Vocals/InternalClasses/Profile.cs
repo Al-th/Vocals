@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Vocals
 {
     [Serializable]
     public class Profile
     {
-        public string name;
-        public List<Command> commandList;
+        public string Name;
+        public List<Command> CommandList;
 
         public Profile() {
         }
 
         public Profile(string name){
-            this.name = name;
-            commandList = new List<Command>();
+            this.Name = name;
+            CommandList = new List<Command>();
         }
 
-        public void addCommand(Command c){
-            commandList.Add(c);
+        public void AddCommand(Command c){
+            CommandList.Add(c);
         }
 
         ~Profile(){
@@ -28,7 +26,7 @@ namespace Vocals
 
         public override string ToString()
         {
-            return this.name;
+            return this.Name;
         }
     
       

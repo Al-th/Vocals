@@ -1,52 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
-using System.Windows.Input;
 
 namespace Vocals
 {
     [Serializable]
     public class Actions
     {
-        public string type;
-        public  System.Windows.Forms.Keys keys;
-        public float timer;
-        public System.Windows.Forms.Keys keyModifier;
+        public string Type;
+        public  System.Windows.Forms.Keys Keys;
+        public float Timer;
+        public System.Windows.Forms.Keys KeyModifier;
 
         public Actions() {
 
         }
         public Actions(string type, System.Windows.Forms.Keys keys, System.Windows.Forms.Keys modifier, float timer) {
             // TODO: Complete member initialization
-            this.type = type;
-            this.keys = keys;
-            this.timer = timer;
-            this.keyModifier = modifier;
+            this.Type = type;
+            this.Keys = keys;
+            this.Timer = timer;
+            this.KeyModifier = modifier;
         }
 
 
         public override string ToString() {
-            switch (type) {
+            switch (Type) {
                 case "Key press":
-                    return "Key press : " + keys.ToString();
+                    return "Key press : " + Keys.ToString();
                 case "Timer":
-                    return "Timer : " + timer.ToString() + " secs";
+                    return "Timer : " + Timer.ToString() + " secs";
                 default:
                     return "Error : Unknown event";
             }
         }
 
 
-        public void perform() {
-            switch (type) {
+        public void Perform() {
+            switch (Type) {
                 case "Key press":
-                    VirtualKeyboard.PressKey(keys, keyModifier);
+                    VirtualKeyboard.PressKey(Keys, KeyModifier);
                     break;
                 case "Timer":
-                    System.Threading.Thread.Sleep((int)(timer*1000));
+                    System.Threading.Thread.Sleep((int)(Timer*1000));
                     break;
             }
         }

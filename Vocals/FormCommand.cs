@@ -1,65 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Vocals {
     public partial class FormCommand : Form {
-        public List<Actions> actionList { get; set; }
-        public string commandString { get; set; }
+        public List<Actions> ActionList { get; set; }
+        public string CommandString { get; set; }
 
-        public bool answering { get; set; }
-        public string answeringString { get; set; }
+        public bool Answering { get; set; }
+        public string AnsweringString { get; set; }
 
-        public bool answeringSound { get; set; }
-        public string answeringSoundPath { get; set; }
+        public bool AnsweringSound { get; set; }
+        public string AnsweringSoundPath { get; set; }
 
         public FormCommand() {
             InitializeComponent();
-            actionList = new List<Actions>();
-            commandString = "";
+            ActionList = new List<Actions>();
+            CommandString = "";
 
-            answering = false;
-            answeringString = "";
+            Answering = false;
+            AnsweringString = "";
 
-            listBox1.DataSource = actionList;
+            listBox1.DataSource = ActionList;
         }
 
         public FormCommand(Command c) {
             InitializeComponent();
-            actionList = c.actionList;
-            commandString = c.commandString;
+            ActionList = c.ActionList;
+            CommandString = c.CommandString;
 
-            answering = c.answering;
-            checkBox1.Checked = answering;
+            Answering = c.Answering;
+            checkBox1.Checked = Answering;
 
-            answeringString = c.answeringString;
-            richTextBox1.Text = answeringString;
+            AnsweringString = c.AnsweringString;
+            richTextBox1.Text = AnsweringString;
 
-            answeringSound = c.answeringSound;
-            checkBox2.Checked = answeringSound;
+            AnsweringSound = c.AnsweringSound;
+            checkBox2.Checked = AnsweringSound;
 
-            answeringSoundPath = c.answeringSoundPath;
-            textBox2.Text = answeringSoundPath;
+            AnsweringSoundPath = c.AnsweringSoundPath;
+            textBox2.Text = AnsweringSoundPath;
 
-            listBox1.DataSource = actionList;
-            textBox1.Text = commandString;
+            listBox1.DataSource = ActionList;
+            textBox1.Text = CommandString;
         }
 
 
         private void textBox1_TextChanged(object sender, EventArgs e) {
-            this.commandString = textBox1.Text;
+            this.CommandString = textBox1.Text;
         }
 
         private void button3_Click(object sender, EventArgs e) {
             if (listBox1.SelectedItem != null) {
-                actionList.RemoveAt(listBox1.SelectedIndex);
+                ActionList.RemoveAt(listBox1.SelectedIndex);
                 listBox1.DataSource = null;
-                listBox1.DataSource = actionList;
+                listBox1.DataSource = ActionList;
             }
         }
 
@@ -67,17 +64,17 @@ namespace Vocals {
             FormAction newActionForm = new FormAction();
             newActionForm.ShowDialog();
 
-            if (newActionForm.selectedType != "") {
-                if (newActionForm.selectedType == "Key press" && newActionForm.selectedKey != Keys.None
-                    || newActionForm.selectedType == "Timer" && newActionForm.selectedTimer != 0) {
+            if (newActionForm.SelectedType != "") {
+                if (newActionForm.SelectedType == "Key press" && newActionForm.SelectedKey != Keys.None
+                    || newActionForm.SelectedType == "Timer" && newActionForm.SelectedTimer != 0) {
 
-                    Actions myNewAction = new Actions(newActionForm.selectedType, newActionForm.selectedKey, newActionForm.modifier, newActionForm.selectedTimer);
+                    Actions myNewAction = new Actions(newActionForm.SelectedType, newActionForm.SelectedKey, newActionForm.Modifier, newActionForm.SelectedTimer);
                     
 
-                    actionList.Add(myNewAction);
+                    ActionList.Add(myNewAction);
 
                     listBox1.DataSource = null;
-                    listBox1.DataSource = actionList;
+                    listBox1.DataSource = ActionList;
                 }
             }
 
@@ -97,8 +94,8 @@ namespace Vocals {
         }
 
         private void button5_Click(object sender, EventArgs e) {
-            commandString = "";
-            actionList.Clear();
+            CommandString = "";
+            ActionList.Clear();
             this.Close();
         }
 
@@ -108,13 +105,13 @@ namespace Vocals {
                 FormAction formEditAction = new FormAction(a);
                 formEditAction.ShowDialog();
 
-                a.keys = formEditAction.selectedKey;
-                a.type = formEditAction.selectedType;
-                a.keyModifier = formEditAction.modifier;
-                a.timer = (float)formEditAction.selectedTimer;
+                a.Keys = formEditAction.SelectedKey;
+                a.Type = formEditAction.SelectedType;
+                a.KeyModifier = formEditAction.Modifier;
+                a.Timer = (float)formEditAction.SelectedTimer;
 
                 listBox1.DataSource = null;
-                listBox1.DataSource = actionList;
+                listBox1.DataSource = ActionList;
 
 
             }
@@ -127,39 +124,39 @@ namespace Vocals {
         private void button6_Click(object sender, EventArgs e) {
             int selectedIndex = listBox1.SelectedIndex;
             if (selectedIndex > 0) {
-                Actions actionToMoveDown = actionList.ElementAt(selectedIndex - 1);
-                actionList.RemoveAt(selectedIndex - 1);
-                actionList.Insert(selectedIndex, actionToMoveDown);
+                Actions actionToMoveDown = ActionList.ElementAt(selectedIndex - 1);
+                ActionList.RemoveAt(selectedIndex - 1);
+                ActionList.Insert(selectedIndex, actionToMoveDown);
 
                 listBox1.DataSource = null;
-                listBox1.DataSource = actionList;
+                listBox1.DataSource = ActionList;
                 listBox1.SelectedIndex = selectedIndex - 1;
             }
         }
 
         private void button7_Click(object sender, EventArgs e) {
             int selectedIndex = listBox1.SelectedIndex;
-            if (selectedIndex < actionList.Count - 1) {
-                Actions actionToMoveUp = actionList.ElementAt(selectedIndex + 1);
-                actionList.RemoveAt(selectedIndex + 1);
-                actionList.Insert(selectedIndex, actionToMoveUp);
+            if (selectedIndex < ActionList.Count - 1) {
+                Actions actionToMoveUp = ActionList.ElementAt(selectedIndex + 1);
+                ActionList.RemoveAt(selectedIndex + 1);
+                ActionList.Insert(selectedIndex, actionToMoveUp);
 
                 listBox1.DataSource = null;
-                listBox1.DataSource = actionList;
+                listBox1.DataSource = ActionList;
                 listBox1.SelectedIndex = selectedIndex + 1;
             }
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
-            answeringString = richTextBox1.Text;
+            AnsweringString = richTextBox1.Text;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
             if (checkBox1.Checked) {
                 checkBox2.Checked = false;
-                answeringSound = false;
+                AnsweringSound = false;
             }
-            answering = checkBox1.Checked;
+            Answering = checkBox1.Checked;
             
         }
 
@@ -178,7 +175,7 @@ namespace Vocals {
 
             if (ofd.ShowDialog() == DialogResult.OK && ofd.CheckPathExists) {
                 textBox2.Text = ofd.InitialDirectory + ofd.FileName;
-                answeringSoundPath = textBox2.Text ;
+                AnsweringSoundPath = textBox2.Text ;
             }
            
         }
@@ -194,13 +191,14 @@ namespace Vocals {
         private void checkBox2_CheckedChanged(object sender, EventArgs e) {
             if (checkBox2.Checked) {
                 checkBox1.Checked = false;
-                answering = false;
+                Answering = false;
             }
-            answeringSound = true;
+            AnsweringSound = true;
         }
 
+        private void RecordButton_Click(object sender, EventArgs e)
+        {
 
-
-
+        }
     }
 }

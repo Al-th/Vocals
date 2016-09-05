@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Vocals {
     public static class VirtualKeyboard {
         [StructLayout(LayoutKind.Sequential)]
-        internal struct KEYBOARDINPUT {
+        internal struct Keyboardinput {
             public uint type;
             public ushort vk;
             public ushort scanCode;
@@ -21,7 +17,7 @@ namespace Vocals {
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct MOUSEINPUT {
+        internal struct Mouseinput {
             public uint dx;
             public uint dy;
             public uint mouseData;
@@ -31,26 +27,26 @@ namespace Vocals {
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct HARDWAREINPUT {
+        internal struct Hardwareinput {
             public int uMsg;
             public short wParamL;
             public short wParamH;
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        internal struct INPUT {
+        internal struct Input {
             [FieldOffset(0)]
             public int type;
             [FieldOffset(4)]
-            public MOUSEINPUT mi;
+            public Mouseinput mi;
             [FieldOffset(4)]
-            public KEYBOARDINPUT ki;
+            public Keyboardinput ki;
             [FieldOffset(4)]
-            public HARDWAREINPUT hi;
+            public Hardwareinput hi;
         }
 
         [DllImport("User32.dll")]
-        private static extern uint SendInput(uint numberOfInputs, ref INPUT input,
+        private static extern uint SendInput(uint numberOfInputs, ref Input input,
         int structSize);
 
 
@@ -62,15 +58,15 @@ namespace Vocals {
         }
 
         public static void SendKey(uint keyCode, KeyFlag keyFlag) {
-            INPUT InputData = new INPUT();
+            Input inputData = new Input();
 
-            InputData.type = 1;
-            InputData.ki.scanCode = (ushort)keyCode;
-            InputData.ki.flags = (uint)keyFlag;
-            Console.WriteLine(InputData.ki.scanCode);
+            inputData.type = 1;
+            inputData.ki.scanCode = (ushort)keyCode;
+            inputData.ki.flags = (uint)keyFlag;
+            Console.WriteLine(inputData.ki.scanCode);
             Console.WriteLine(keyCode);
 
-            SendInput((uint)1, ref InputData, (int)Marshal.SizeOf(typeof(INPUT)));
+            SendInput((uint)1, ref inputData, (int)Marshal.SizeOf(typeof(Input)));
         }
 
         [DllImport("User32.dll")]

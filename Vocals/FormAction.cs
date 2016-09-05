@@ -1,32 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Vocals {
     public partial class FormAction : Form {
-        Keys[] keyDataSource;
+        Keys[] _keyDataSource;
 
-        public float selectedTimer { get; set; }
+        public float SelectedTimer { get; set; }
 
-        public Keys selectedKey { get; set; }
+        public Keys SelectedKey { get; set; }
 
-        public string selectedType { get; set; }
+        public string SelectedType { get; set; }
 
-        public Keys modifier { get; set; }
+        public Keys Modifier { get; set; }
         
         public FormAction() {
 
             InitializeComponent();
 
-            keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
+            _keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
 
-            comboBox2.DataSource = keyDataSource;
+            comboBox2.DataSource = _keyDataSource;
           
             comboBox1.DataSource = new string[]{"Key press","Timer"};
 
@@ -36,21 +30,21 @@ namespace Vocals {
 
         public FormAction(Actions a) {
             InitializeComponent();
-            keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
+            _keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
            
 
-            comboBox2.DataSource = keyDataSource;
+            comboBox2.DataSource = _keyDataSource;
 
             comboBox1.DataSource = new string[] { "Key press", "Timer" };
 
             numericUpDown1.DecimalPlaces = 2;
             numericUpDown1.Increment = 0.1M;
 
-            comboBox2.SelectedItem = a.keys;
-            numericUpDown1.Value = Convert.ToDecimal(a.timer);
-            comboBox1.SelectedItem = a.type;
+            comboBox2.SelectedItem = a.Keys;
+            numericUpDown1.Value = Convert.ToDecimal(a.Timer);
+            comboBox1.SelectedItem = a.Type;
 
-            switch (a.keyModifier) {
+            switch (a.KeyModifier) {
                 case Keys.ControlKey:
                     checkBox1.Checked = true;
                     break;
@@ -70,8 +64,8 @@ namespace Vocals {
         
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            selectedType = (string)comboBox1.SelectedItem;
-            switch (selectedType) {
+            SelectedType = (string)comboBox1.SelectedItem;
+            switch (SelectedType) {
                 case "Key press" :
                     numericUpDown1.Enabled = false;
                     comboBox2.Enabled = true;
@@ -92,11 +86,11 @@ namespace Vocals {
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e) {
-            selectedTimer = (float)numericUpDown1.Value;
+            SelectedTimer = (float)numericUpDown1.Value;
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) {
-            selectedKey = (Keys)comboBox2.SelectedItem;
+            SelectedKey = (Keys)comboBox2.SelectedItem;
         }
 
         private void button1_Click(object sender, EventArgs e) {
@@ -104,9 +98,9 @@ namespace Vocals {
         }
 
         private void button2_Click(object sender, EventArgs e) {
-            selectedType = "";
-            selectedTimer = 0;
-            selectedKey = Keys.None;
+            SelectedType = "";
+            SelectedTimer = 0;
+            SelectedKey = Keys.None;
             this.Close();
         }
 
@@ -114,10 +108,10 @@ namespace Vocals {
             if (checkBox1.Checked) {
                 checkBox2.Checked = false;
                 checkBox3.Checked = false;
-                modifier = Keys.ControlKey;
+                Modifier = Keys.ControlKey;
             }
             else {
-                modifier = Keys.None;
+                Modifier = Keys.None;
             }
         }
 
@@ -125,10 +119,10 @@ namespace Vocals {
             if (checkBox2.Checked) {
                 checkBox1.Checked = false;
                 checkBox3.Checked = false;
-                modifier = Keys.ShiftKey;
+                Modifier = Keys.ShiftKey;
             }
             else {
-                modifier = Keys.None;
+                Modifier = Keys.None;
             }
         }
 
@@ -136,10 +130,10 @@ namespace Vocals {
             if (checkBox3.Checked) {
                 checkBox1.Checked = false;
                 checkBox2.Checked = false;
-                modifier = Keys.Alt;
+                Modifier = Keys.Alt;
             }
             else {
-                modifier = Keys.None;
+                Modifier = Keys.None;
             }
         }
 
