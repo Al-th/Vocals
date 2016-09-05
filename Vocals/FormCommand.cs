@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -164,10 +163,6 @@ namespace Vocals {
 
         }
 
-        private void richTextBox2_TextChanged(object sender, EventArgs e) {
-
-        }
-
         private void button9_Click(object sender, EventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
 
@@ -178,10 +173,6 @@ namespace Vocals {
                 AnsweringSoundPath = textBox2.Text ;
             }
            
-        }
-
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e) {
-
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e) {
