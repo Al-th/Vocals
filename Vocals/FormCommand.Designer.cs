@@ -45,7 +45,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button9 = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.RecordButton = new System.Windows.Forms.Button();
+            this.RecordButton = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -67,6 +67,7 @@
             this.listBox1.Size = new System.Drawing.Size(195, 134);
             this.listBox1.TabIndex = 4;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBox1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.listBox1_PreviewKeyDown);
             // 
             // button1
             // 
@@ -231,13 +232,15 @@
             // 
             // RecordButton
             // 
+            this.RecordButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.RecordButton.AutoSize = true;
             this.RecordButton.Location = new System.Drawing.Point(216, 34);
             this.RecordButton.Name = "RecordButton";
-            this.RecordButton.Size = new System.Drawing.Size(57, 23);
-            this.RecordButton.TabIndex = 11;
+            this.RecordButton.Size = new System.Drawing.Size(52, 23);
+            this.RecordButton.TabIndex = 12;
             this.RecordButton.Text = "Record";
             this.RecordButton.UseVisualStyleBackColor = true;
-            this.RecordButton.Click += new System.EventHandler(this.RecordButton_Click);
+            this.RecordButton.CheckedChanged += new System.EventHandler(this.RecordButton_CheckedChanged);
             // 
             // FormCommand
             // 
@@ -255,6 +258,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
@@ -280,6 +284,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button RecordButton;
+        private System.Windows.Forms.CheckBox RecordButton;
     }
 }

@@ -15,6 +15,8 @@ namespace Vocals {
         public bool AnsweringSound { get; set; }
         public string AnsweringSoundPath { get; set; }
 
+        private bool _isRecording;
+
         public FormCommand() {
             InitializeComponent();
             ActionList = new List<Actions>();
@@ -69,8 +71,6 @@ namespace Vocals {
                     || newActionForm.SelectedType == "Timer" && newActionForm.SelectedTimer != 0) {
 
                     Actions myNewAction = new Actions(newActionForm.SelectedType, newActionForm.SelectedKey, newActionForm.Modifier, newActionForm.SelectedTimer);
-                    
-
                     ActionList.Add(myNewAction);
 
                     listBox1.DataSource = null;
@@ -196,9 +196,22 @@ namespace Vocals {
             AnsweringSound = true;
         }
 
-        private void RecordButton_Click(object sender, EventArgs e)
+        private void listBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            if (_isRecording)
+            {
+                Actions myNewAction = new Actions("Key press", e.KeyCode, Keys.None, (float)0.0);
+                ActionList.Add(myNewAction);
 
+                listBox1.DataSource = null;
+                listBox1.DataSource = ActionList;
+            }
+        }
+
+        private void RecordButton_CheckedChanged(object sender, EventArgs e)
+        {
+            _isRecording = !_isRecording;
+            listBox1.Focus();
         }
     }
 }
