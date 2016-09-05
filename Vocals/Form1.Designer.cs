@@ -108,7 +108,6 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(226, 134);
             this.listBox1.TabIndex = 8;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button3
             // 
@@ -154,7 +153,6 @@
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Commands ";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // button5
             // 
@@ -176,7 +174,6 @@
             this.groupBox4.TabIndex = 15;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Application";
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // button6
             // 
@@ -198,7 +195,6 @@
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "logs";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // progressBar1
             // 
@@ -233,7 +229,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(597, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // Form1
             // 

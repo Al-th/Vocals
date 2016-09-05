@@ -136,10 +136,5 @@ namespace Vocals {
                 Modifier = Keys.None;
             }
         }
-
-
-
-
-
     }
 }

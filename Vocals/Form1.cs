@@ -224,8 +224,6 @@ namespace Vocals {
 
         }
 
-
-
         protected bool EnumTheWindows(IntPtr hWnd, IntPtr lParam) {
             int size = GetWindowTextLength(hWnd);
             if (size++ > 0 && IsWindowVisible(hWnd)) {
@@ -236,10 +234,6 @@ namespace Vocals {
             return true;
         }
 
-
-        private void textBox1_TextChanged(object sender, EventArgs e) {
-
-        }
 
         void CreateNewProfile() {
             FormNewProfile formNewProfile = new FormNewProfile();
@@ -352,14 +346,6 @@ namespace Vocals {
             }
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
-
-        }
-
         private void button3_Click(object sender, EventArgs e) {
             Profile p = (Profile)(comboBox2.SelectedItem);
             _profileList.Remove(p);
@@ -442,13 +428,6 @@ namespace Vocals {
             _myWindows.Clear();
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e) {
-
-        }
-
-        private void groupBox4_Enter(object sender, EventArgs e) {
-
-        }
 
         private void button5_Click_1(object sender, EventArgs e) {
             try {
@@ -502,12 +481,6 @@ namespace Vocals {
             }
 
         }
-
-        private void groupBox3_Enter(object sender, EventArgs e) {
-
-        }
-
-
 
         private void advancedSettingsToolStripMenuItem_Click(object sender, EventArgs e) {
             FormOptions formOptions = new FormOptions();
@@ -573,21 +546,9 @@ namespace Vocals {
             
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
-
-        }
-
         private void button6_Click(object sender, EventArgs e) {
             _myWindows.Clear();
             RefreshProcessesList();
         }
-
-
-
-
     }
 }
