@@ -314,7 +314,7 @@ namespace Vocals {
                     Profile p = (Profile)comboBox2.SelectedItem;
 
                     if (p != null) {
-                        if (formCommand.CommandString != null && formCommand.CommandString != "" && formCommand.ActionList.Count != 0) {
+                        if (formCommand.CommandString != null && formCommand.CommandString != "" && formCommand.ActionList.Count >= 0) {
                             Command c;
                             c = new Command(formCommand.CommandString, formCommand.ActionList, formCommand.Answering, formCommand.AnsweringString, formCommand.AnsweringSound, formCommand.AnsweringSoundPath);
                             p.AddCommand(c);
