@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Deployment.Application;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Speech.Synthesis;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Vocals {
@@ -26,12 +21,12 @@ namespace Vocals {
 
 
 
-            if (waveInGetNumDevs() == 0) {
-                MessageBox.Show("Please plug a valid microphone before launching the application", "No microphone found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else {
+            //if (waveInGetNumDevs() == 0) {
+            //    MessageBox.Show("Please plug a valid microphone before launching the application", "No microphone found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //else {
                 Application.Run(new Form1());
-            }
+            //}
         }
     }
 }

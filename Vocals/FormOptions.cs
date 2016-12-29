@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Speech.Recognition;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Vocals.InternalClasses;
 
 namespace Vocals {
     public partial class FormOptions : Form {
-        public Options opt;
-        public Options saveOptions;
+        public Options Opt;
+        public Options SaveOptions;
 
 
         public FormOptions() {
@@ -29,17 +23,17 @@ namespace Vocals {
             Keys[] keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
             comboBox2.DataSource = keyDataSource;
 
-            recognitionLanguageComboBox.DataSource = getInstalledRecognitionLanguages();
+            recognitionLanguageComboBox.DataSource = GetInstalledRecognitionLanguages();
 
-            opt = new Options();
-            saveOptions = new Options(opt);
+            Opt = new Options();
+            SaveOptions = new Options(Opt);
 
-            checkBox1.Checked = opt.toggleListening;
-            comboBox2.SelectedItem = opt.key;
-            richTextBox1.Text = opt.answer;
-            trackBar1.Value = opt.threshold;
-            label5.Text = Convert.ToString(opt.threshold);
-            recognitionLanguageComboBox.SelectedItem = opt.language;
+            checkBox1.Checked = Opt.ToggleListening;
+            comboBox2.SelectedItem = Opt.Key;
+            richTextBox1.Text = Opt.Answer;
+            trackBar1.Value = Opt.Threshold;
+            label5.Text = Convert.ToString(Opt.Threshold);
+            recognitionLanguageComboBox.SelectedItem = Opt.Language;
             recognitionLanguageWarning.Visible = false;
 
             if (checkBox1.Checked) {
@@ -53,21 +47,21 @@ namespace Vocals {
 
         }
 
-        private string[] getInstalledRecognitionLanguages() {
+        private string[] GetInstalledRecognitionLanguages() {
             return SpeechRecognitionEngine.InstalledRecognizers().Select(ri => ri.Culture.DisplayName).ToArray();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
-            if (opt != null) {
+            if (Opt != null) {
                 if (checkBox1.Checked) {
                     comboBox2.Enabled = true;
                     richTextBox1.Enabled = true;
-                    opt.toggleListening = true;
+                    Opt.ToggleListening = true;
                 }
                 else {
                     comboBox2.Enabled = false;
                     richTextBox1.Enabled = false;
-                    opt.toggleListening = false;
+                    Opt.ToggleListening = false;
                 }
             }
         }
@@ -77,21 +71,21 @@ namespace Vocals {
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e) {
-            if (opt != null) {
-                opt.threshold = trackBar1.Value;
+            if (Opt != null) {
+                Opt.Threshold = trackBar1.Value;
                 label5.Text = Convert.ToString(trackBar1.Value);
             }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) {
-            if (opt != null) {
-                opt.key = (Keys)comboBox2.SelectedItem;
+            if (Opt != null) {
+                Opt.Key = (Keys)comboBox2.SelectedItem;
             }
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
-            if (opt != null) {
-                opt.answer = richTextBox1.Text;
+            if (Opt != null) {
+                Opt.Answer = richTextBox1.Text;
             }
         }
 
@@ -100,16 +94,15 @@ namespace Vocals {
         }
 
         private void button2_Click(object sender, EventArgs e) {
-            opt = saveOptions;
+            Opt = SaveOptions;
             this.Close();
         }
 
         private void recognitionLanguageComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (opt != null) {
-                opt.language = (String) recognitionLanguageComboBox.SelectedItem;
+            if (Opt != null) {
+                Opt.Language = (String) recognitionLanguageComboBox.SelectedItem;
                 recognitionLanguageWarning.Visible = true;
             }
         }
-
     }
 }

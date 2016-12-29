@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Vocals.InternalClasses {
     class GlobalHotkey {
-        private int modifier;
-        private int key;
-        private IntPtr hWnd;
-        private int id;
+        private int _modifier;
+        private int _key;
+        private IntPtr _hWnd;
+        private int _id;
 
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
@@ -20,27 +16,27 @@ namespace Vocals.InternalClasses {
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         public GlobalHotkey(int mod, Keys k, Form1 hw) {
-            this.modifier = mod;
-            this.key = (int)k;
-            this.hWnd = hw.Handle;
-            this.id = this.GetHashCode();
+            this._modifier = mod;
+            this._key = (int)k;
+            this._hWnd = hw.Handle;
+            this._id = this.GetHashCode();
         }
 
-        public void modifyKey(int mod, Keys k) {
-            this.modifier = mod;
-            this.key = (int)k;
+        public void ModifyKey(int mod, Keys k) {
+            this._modifier = mod;
+            this._key = (int)k;
         }
 
         public override int GetHashCode() {
-            return modifier ^ key ^ hWnd.ToInt32();
+            return _modifier ^ _key ^ _hWnd.ToInt32();
         }
 
-        public bool register() {
-            return RegisterHotKey(hWnd, id, modifier, key);
+        public bool Register() {
+            return RegisterHotKey(_hWnd, _id, _modifier, _key);
         }
 
-        public bool unregister() {
-            return UnregisterHotKey(hWnd, id);
+        public bool Unregister() {
+            return UnregisterHotKey(_hWnd, _id);
         }
     }
 }

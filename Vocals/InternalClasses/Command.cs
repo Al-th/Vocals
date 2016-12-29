@@ -1,48 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Speech.Synthesis;
-using System.Text;
-using WMPLib;
 
 namespace Vocals {
     [Serializable]
     public class Command {
 
-        public string commandString;
-        public List<Actions> actionList;
+        public string CommandString;
+        public List<Actions> ActionList;
 
 
-        public bool answering { get; set; }
+        public bool Answering { get; set; }
 
-        public string answeringString { get; set; }
+        public string AnsweringString { get; set; }
 
-        public bool answeringSound { get; set; }
+        public bool AnsweringSound { get; set; }
 
-        public string answeringSoundPath { get; set; }
+        public string AnsweringSoundPath { get; set; }
 
         public Command() {
 
         }
 
         public Command(string commandString, List<Actions> actionList) {
-            this.commandString = commandString;
-            this.actionList = actionList;
-            this.answering = false;
-            this.answeringString = "";
+            this.CommandString = commandString;
+            this.ActionList = actionList;
+            this.Answering = false;
+            this.AnsweringString = "";
         }
 
         public Command(string commandString, List<Actions> actionList, bool answering, string answeringString, bool answeringSound, string answeringSoundPath) {
-            this.commandString = commandString;
-            this.actionList = actionList;
-            this.answering = answering;
-            this.answeringString = answeringString;
+            this.CommandString = commandString;
+            this.ActionList = actionList;
+            this.Answering = answering;
+            this.AnsweringString = answeringString;
             if (answeringString == null) {
                 answeringString = "";
             }
-            this.answeringSound = answeringSound;
-            this.answeringSoundPath = answeringSoundPath;
+            this.AnsweringSound = answeringSound;
+            this.AnsweringSoundPath = answeringSoundPath;
             if(answeringSoundPath == null){
                 answeringSoundPath = "";
             }
@@ -53,8 +50,8 @@ namespace Vocals {
         }
 
         public override string ToString() {
-            string returnString = commandString + " : " + actionList.Count.ToString();
-            if (actionList.Count > 1) {
+            string returnString = CommandString + " : " + ActionList.Count.ToString();
+            if (ActionList.Count > 1) {
                 returnString += " actions";
             }
             else {
@@ -70,17 +67,17 @@ namespace Vocals {
         [DllImport("User32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        public void perform(IntPtr winPointer) {
+        public void Perform(IntPtr winPointer) {
             SetForegroundWindow(winPointer);
             ShowWindow(winPointer, 5);
-            foreach (Actions a in actionList) {
-                a.perform();
+            foreach (Actions a in ActionList) {
+                a.Perform();
             }
-            if (answering && answeringString != null) {
+            if (Answering && AnsweringString != null) {
                 try {
                     SpeechSynthesizer synth = new SpeechSynthesizer();
                     if (synth != null) {
-                        synth.SpeakAsync(answeringString);
+                        synth.SpeakAsync(AnsweringString);
                     }
                 }
                 catch(Exception e){
@@ -88,16 +85,16 @@ namespace Vocals {
                 }
             }
 
-            if (answeringSound && answeringSoundPath != null) {
-                if (answeringSoundPath.IndexOf(".wav") == answeringSoundPath.Length-4) {
+            if (AnsweringSound && AnsweringSoundPath != null) {
+                if (AnsweringSoundPath.IndexOf(".wav") == AnsweringSoundPath.Length-4) {
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer();
-                    player.SoundLocation = answeringSoundPath;
+                    player.SoundLocation = AnsweringSoundPath;
                     player.Play();
                 }
-                else if (answeringSoundPath.IndexOf(".mp3") == answeringSoundPath.Length - 4) {
+                else if (AnsweringSoundPath.IndexOf(".mp3") == AnsweringSoundPath.Length - 4) {
                     WMPLib.WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
 
-                    wplayer.URL = answeringSoundPath;
+                    wplayer.URL = AnsweringSoundPath;
                     wplayer.controls.play();
                 }
             }
